@@ -1,0 +1,198 @@
+/* ことばクエスト Ver.1.2.1 PREMIUM テスト専用共通テーマ */
+:root[data-kq-plan="premium"] {
+  --kq-premium-gold: #D4AF37;
+  --kq-premium-light: #FFD54F;
+  --kq-premium-bg: #FFF8DC;
+  --kq-premium-dark: #B8860B;
+  --kq-premium-text: #3E2C00;
+  color-scheme: light;
+}
+.kq-plan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.kq-plan-box{padding:13px;border-radius:14px;border:1px solid #b7c9d2;background:#fff;color:#244358;min-width:0}
+.kq-plan-box strong{display:block;font-size:clamp(15px,3vw,20px);margin-bottom:6px}
+.kq-plan-box p,.kq-plan-box small{margin:5px 0;font-size:13px;line-height:1.7}
+.kq-plan-box.premium{background:#fff6d3;border-color:#c7a034;color:#513800}
+.kq-plan-box ul{padding-left:1.3em;font-size:13px;line-height:1.8;margin:6px 0}
+.kq-plan-form{display:grid;gap:9px;margin-top:14px}
+.kq-plan-form input{display:block;min-height:44px;border:2px solid #9babb0;border-radius:10px;padding:10px 12px;width:100%;font-size:16px;background:white;color:#29343e;box-sizing:border-box}
+.kq-plan-message{min-height:1.5em;font-weight:700;line-height:1.7;color:#21704b}
+.kq-plan-message.kq-plan-error{color:#b12536}
+.kq-plan-note{font-size:12px;line-height:1.7;color:#555;margin:8px 0}
+.kq-plan-badge{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;border-radius:999px;padding:4px 12px;border:1px solid #B8860B;background:linear-gradient(135deg,#FFF4BD,#D4AF37);color:#3E2C00!important;font-size:12px;font-weight:900;letter-spacing:.06em;box-shadow:0 2px 8px #a37a162f}
+.kq-plan-badge[hidden],.kq-plan-form[hidden],.kq-premium-only[hidden],#kqPlanRevert[hidden],#kqPremiumAvatarOptions[hidden]{display:none!important}
+#kqPremiumAvatarFrame{min-height:40px;width:100%;max-width:360px;border:2px solid #b8860b;border-radius:9px;background:white;color:#3E2C00;padding:6px}
+#kqPremiumAvatarOptions{border:1px solid #b8860b;border-radius:14px;padding:13px;margin:15px 0;background:#fff8dc;color:#3e2c00}
+#kqCurrentPlan{font-weight:900;color:#6a4a00}
+#kqPlanRevert{border:1px solid #a78316;border-radius:10px;background:#fff7d9;color:#50380b;padding:11px 17px;font-weight:750;cursor:pointer}
+#kqPremiumUnlockForm button{min-height:46px;padding:10px 16px;border:1px solid #9b6d05;border-radius:10px;background:#D4AF37;color:#3E2C00;font-size:15px;font-weight:800;cursor:pointer}
+#kqGoldThemeNote{font-size:12px;color:#654b12}
+#kqPremiumTitleIcon{display:none;object-fit:contain;width:clamp(85px,13vw,155px);height:clamp(85px,13vw,155px);filter:drop-shadow(0 5px 14px #7b550952)}
+:root[data-kq-plan="premium"] #kqPremiumTitleIcon{display:block}
+:root[data-kq-plan="premium"] .title-mark{display:none}
+:root[data-kq-plan="premium"] .user-profile-icon,
+:root[data-kq-plan="premium"] .user-profile-card{border-color:#C39822!important}
+:root[data-kq-plan="premium"] body.kq-avatar-gold .user-profile-icon{outline:5px solid #D4AF37;box-shadow:0 0 0 8px #FFF4BD,0 6px 22px #c3982277;background:#FFE29A!important}
+@media(max-width:520px){.kq-plan-grid{grid-template-columns:1fr}}
+
+/* 読みやすさ優先：既存画面・トレーニングロジックには一切触れない */
+:root[data-kq-plan="premium"] body:not(.kd-app){--primary:#B8860B;--primary-color:#B8860B;--accent:#D4AF37;--main-color:#D4AF37;--color-primary:#B8860B}
+:root[data-kq-plan="premium"] body .app,
+:root[data-kq-plan="premium"] body .screen,
+:root[data-kq-plan="premium"] body .title-screen{background-color:#FFF8DC!important;color:#3E2C00}
+:root[data-kq-plan="premium"] body .title-screen{background-image:radial-gradient(ellipse at 20% 15%,#FFF4B2 0%,transparent 38%),linear-gradient(135deg,#FFFDF0 0%,#FFE6A0 100%)!important}
+:root[data-kq-plan="premium"] body .title-name,
+:root[data-kq-plan="premium"] body .title-name span,
+:root[data-kq-plan="premium"] body .title-brand,
+:root[data-kq-plan="premium"] body .screen-head-title{color:#3E2C00!important;text-shadow:none!important}
+:root[data-kq-plan="premium"] body .menu-button,
+:root[data-kq-plan="premium"] body .category-card,
+:root[data-kq-plan="premium"] body .activity-card,
+:root[data-kq-plan="premium"] body .settings-panel,
+:root[data-kq-plan="premium"] body .quiz-card,
+:root[data-kq-plan="premium"] body .user-profile-card,
+:root[data-kq-plan="premium"] body .screen-intro,
+:root[data-kq-plan="premium"] body .community-posts-section{
+  background-color:#FFF5CF!important;
+  background-image:linear-gradient(150deg,#FFFDF2,#FFEDB5)!important;
+  border-color:#C79B26!important;
+  color:#3E2C00!important;
+  box-shadow:0 4px 16px #8d641c22!important;
+}
+:root[data-kq-plan="premium"] body .menu-button strong,
+:root[data-kq-plan="premium"] body .menu-button small,
+:root[data-kq-plan="premium"] body .category-card *,
+:root[data-kq-plan="premium"] body .settings-panel h3{color:#3E2C00!important;text-shadow:none!important}
+:root[data-kq-plan="premium"] body button.primary-button,
+:root[data-kq-plan="premium"] body button.outline-button,
+:root[data-kq-plan="premium"] body .user-profile-primary,
+:root[data-kq-plan="premium"] body .category-card.selected,
+:root[data-kq-plan="premium"] body .head-icon-button,
+:root[data-kq-plan="premium"] body .menu-primary{
+  background:linear-gradient(140deg,#FFE77E,#D4AF37)!important;
+  border-color:#B8860B!important;
+  color:#3E2C00!important;
+}
+:root[data-kq-plan="premium"] body .v156-genre-progress-track{border-color:#B8860B!important;background:#FFF9E7!important}
+:root[data-kq-plan="premium"] body .v156-genre-progress-fill{background:linear-gradient(90deg,#FFD54F,#B8860B)!important}
+:root[data-kq-plan="premium"] body .v156-genre-progress-caption,
+:root[data-kq-plan="premium"] body .v156-genre-progress-caption strong{color:#654500!important}
+:root[data-kq-plan="premium"] body .training-needs-notice,
+:root[data-kq-plan="premium"] body .records-list{border-color:#D4AF37!important}
+:root[data-kq-plan="premium"] body .menu-button:focus-visible,
+:root[data-kq-plan="premium"] body button:focus-visible,
+:root[data-kq-plan="premium"] body input:focus-visible{outline:3px solid #7A5100!important;outline-offset:2px}
+
+/* 独立ゲームはUIのみ変更：3DのCanvas、背景モデル、キャラ・確率には作用させない */
+:root[data-kq-plan="premium"] body .kd-app,
+:root[data-kq-plan="premium"] body .cg-shell{color:#3E2C00}
+:root[data-kq-plan="premium"] body .kd-topbar,
+:root[data-kq-plan="premium"] body .kd-panel,
+:root[data-kq-plan="premium"] body .cg-header,
+:root[data-kq-plan="premium"] body .cg-panel,
+:root[data-kq-plan="premium"] body .hud-top .brand,
+:root[data-kq-plan="premium"] body #qbox,
+:root[data-kq-plan="premium"] body .hud-top .pill{
+  background:#FFF2BE!important;
+  color:#3E2C00!important;
+  border:1px solid #B8860B!important;
+  text-shadow:none!important;
+}
+:root[data-kq-plan="premium"] body .kd-back,
+:root[data-kq-plan="premium"] body .kd-icon-button,
+:root[data-kq-plan="premium"] body .cg-primary,
+:root[data-kq-plan="premium"] body .cg-back,
+:root[data-kq-plan="premium"] body .pause-pill,
+:root[data-kq-plan="premium"] body .hud-top button{
+  background:#D4AF37!important;color:#3E2C00!important;border:1px solid #8B6500!important;text-shadow:none!important;
+}
+:root[data-kq-plan="premium"] body .kd-brand,
+:root[data-kq-plan="premium"] body .cg-brand{color:#3E2C00!important}
+/* ゲーム内のヒント・正誤色や3Dのcanvas、背景画像は上書きしない */
+/* ことばダンジョンのメダル・ガチャ・装備欄のテーマ（数値/確率は変更なし） */
+:root[data-kq-plan="premium"] body .kd-card,
+:root[data-kq-plan="premium"] body .kd-stat-card,
+:root[data-kq-plan="premium"] body .kd-medal-slot,
+:root[data-kq-plan="premium"] body .kd-pill,
+:root[data-kq-plan="premium"] body .kd-rules-preview{
+  background:linear-gradient(140deg,#FFFAE9,#FFE8A0)!important;
+  border-color:#C59A23!important;color:#3E2C00!important;
+}
+:root[data-kq-plan="premium"] body .kd-primary-button,
+:root[data-kq-plan="premium"] body .kd-secondary-button,
+:root[data-kq-plan="premium"] body .kd-small-button,
+:root[data-kq-plan="premium"] body .kd-pixel-menu-btn,
+:root[data-kq-plan="premium"] body .kd-hint-button{
+  background:linear-gradient(120deg,#FFE77B,#D4AF37)!important;
+  border-color:#94660A!important;color:#3E2C00!important;
+}
+/* 各ゲームの設定/結果/オーバーレイのみに金色を適用する */
+:root[data-kq-plan="premium"] body .question-card,
+:root[data-kq-plan="premium"] body .cat-card,
+:root[data-kq-plan="premium"] body .dialog,
+:root[data-kq-plan="premium"] body .start-card,
+:root[data-kq-plan="premium"] body .result-card,
+:root[data-kq-plan="premium"] body .ud-box,
+:root[data-kq-plan="premium"] body .quiz-question-card{
+  background:#FFF2C2!important;
+  border-color:#B8860B!important;color:#3E2C00!important;
+}
+:root[data-kq-plan="premium"] body .main-cta,
+:root[data-kq-plan="premium"] body .outline-cta,
+:root[data-kq-plan="premium"] body .btn-option,
+:root[data-kq-plan="premium"] body .action-btn,
+:root[data-kq-plan="premium"] body .main-btn,
+:root[data-kq-plan="premium"] body .primary:not(.overlay),
+:root[data-kq-plan="premium"] body .utility{
+  background:#D4AF37!important;border-color:#9C7615!important;color:#3E2C00!important;
+}
+
+
+/* R15.8 / Android R17: タイトルのプラン状態とアップグレード導線 */
+#titleScreen .kq-title-plan-card {
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;margin:0 0 clamp(12px,1.5vw,20px);padding:clamp(13px,1.5vw,19px);
+  border:2px solid #d2ae55;border-radius:20px;
+  background:linear-gradient(115deg,#fffdf7 0%,#fff0c0 100%);
+  box-shadow:0 7px 24px rgba(114,83,21,.14);color:#3e2c00;
+  box-sizing:border-box;position:relative;z-index:2;
+}
+#titleScreen .kq-title-plan-info{flex:1 1 auto;min-width:0}
+#titleScreen .kq-title-plan-kicker{display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#70500f;font-size:clamp(11px,1vw,13px);font-weight:800}
+#titleScreen .kq-title-plan-test{border:1px solid #d5bf8e;border-radius:99px;background:#fff8e6;padding:2px 8px;font-size:11px;font-weight:700}
+#titleScreen .kq-title-plan-heading{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:3px 0}
+#titleScreen .kq-title-plan-heading strong{font-size:clamp(22px,2vw,28px);letter-spacing:.02em;line-height:1.2;color:#544016;font-weight:950}
+#titleScreen .kq-title-plan-heading span{font-size:13px;font-weight:800;color:#6c501b}
+#titleScreen .kq-title-plan-info p{margin:4px 0 8px;font-size:clamp(12px,1.04vw,15px);font-weight:750;line-height:1.5;color:#4b3c19}
+#titleScreen .kq-title-plan-benefits{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 5px}
+#titleScreen .kq-title-plan-benefits span{padding:4px 8px;border-radius:99px;background:#fff7db;color:#694802;border:1px solid #dfc27b;font-size:clamp(10px,.95vw,12px);font-weight:750;line-height:1.2}
+#titleScreen .kq-title-plan-info small{font-size:11px;color:#715d38;line-height:1.5;display:block}
+#titleScreen .kq-title-plan-cta{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:7px;
+  min-width:clamp(158px,16vw,240px);min-height:54px;padding:12px 15px;
+  background:linear-gradient(125deg,#ffe17c 0%,#d4af37 85%);color:#3e2c00;
+  border:2px solid #96700e;border-radius:15px;font-size:clamp(13px,1.16vw,17px);
+  font-weight:900;box-shadow:0 4px 0 rgba(112,79,10,.18);cursor:pointer;line-height:1.35;
+  transition:transform .15s,box-shadow .15s;
+}
+#titleScreen .kq-title-plan-cta:hover{transform:translateY(-2px);box-shadow:0 6px 0 rgba(112,79,10,.16)}
+#titleScreen .kq-title-plan-cta:active{transform:translateY(1px);box-shadow:0 2px 0 rgba(112,79,10,.14)}
+#titleScreen .kq-title-plan-cta:focus-visible{outline:3px solid #775000;outline-offset:4px}
+#titleScreen .kq-title-plan-crown{font-size:21px}
+#titleScreen .kq-title-plan-chevron{font-size:24px;line-height:.8}
+:root[data-kq-plan="premium"] #titleScreen .kq-title-plan-card{
+  background:linear-gradient(115deg,#fff9df,#ffe6a0);border-color:#aa7b18;box-shadow:0 6px 22px rgba(134,91,13,.2);
+}
+:root[data-kq-plan="premium"] #titleScreen .kq-title-plan-heading strong{color:#795005}
+:root[data-kq-plan="premium"] #titleScreen .kq-title-plan-cta{background:linear-gradient(110deg,#fffaf0,#fce39c);border-color:#9f7d2a}
+@media(max-width:760px){
+  #titleScreen .kq-title-plan-card{padding:12px;gap:11px;flex-wrap:wrap;margin-bottom:13px;border-radius:17px}
+  #titleScreen .kq-title-plan-info{flex-basis:100%}
+  #titleScreen .kq-title-plan-cta{min-width:0;min-height:46px;width:100%;padding:8px 12px}
+  #titleScreen .kq-title-plan-heading strong{font-size:23px}
+}
+@media(orientation:landscape) and (min-width:761px) and (max-height:590px){
+  #titleScreen .kq-title-plan-card{padding:8px 12px;margin-bottom:8px}
+  #titleScreen .kq-title-plan-benefits{margin:3px 0}
+  #titleScreen .kq-title-plan-cta{min-height:40px}
+}
+@media(prefers-reduced-motion:reduce){#titleScreen .kq-title-plan-cta{transition:none}}

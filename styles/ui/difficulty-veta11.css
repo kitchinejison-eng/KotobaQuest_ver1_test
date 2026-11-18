@@ -1,0 +1,22 @@
+/*
+ * 【ことばクエスト ver1.2.1 PC｜スタイル日本語注記】
+ * ファイル：styles/ui/difficulty-veta11.css
+ * 役割：difficulty-veta11画面・機能の補助スタイル
+ * 利用画面：index.html
+ * 注意：CSSの背景画像は保存場所を基準に相対パスが解決されます。
+ * 注意：HTML側の<link>順を変えると色・サイズなどの上書き優先順位が変わります。
+ */
+/* R15.6: ジャンル一覧は数字のLvを出さず、解放済み段階をメーター表示。 */
+.v156-genre-progress{grid-column:2;min-width:0;display:flex;flex-direction:column;gap:5px;width:100%;margin-top:6px}
+.v156-genre-progress-caption{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:clamp(10px,2.4vw,12px);font-weight:800;color:#205b50}
+.v156-genre-progress-caption strong{font-size:clamp(11px,2.6vw,13px);color:#176c50;white-space:nowrap}
+.v156-genre-progress-track{display:block;width:100%;height:12px;border:1px solid #b7d6c8;border-radius:999px;background:#e5f2eb;overflow:hidden}
+.v156-genre-progress-fill{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#47b789,#16835c);transition:width .3s ease}
+.v156-genre-progress-track[aria-valuenow="100"] .v156-genre-progress-fill{background:linear-gradient(90deg,#3da3b2,#18885a)}
+@media(prefers-reduced-motion:reduce){.v156-genre-progress-fill{transition:none}}
+.v11-activity-row { background:rgba(255,255,255,.94); border:1px solid #d7e4ee; border-radius:15px; overflow:hidden; }
+.v11-activity-row .activity-card-native { width:100%; }
+.v11-activity-level { display:block; width:fit-content; margin:5px 0; color:#07655d; font-weight:800; font-size:.91rem; }
+.v11-level-select { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; padding:9px 14px 12px; border-top:1px solid #e2eaf0; font-size:.89rem; font-weight:700; color:#2c475c; }
+.v11-level-select select { min-width:155px; max-width:100%; padding:8px 13px; border:2px solid #92b6d1; border-radius:9px; color:#163d58; background:#fff; font-size:1rem; font-weight:750; }
+@media(max-width:520px){ .v11-level-select select { width:100%; } }

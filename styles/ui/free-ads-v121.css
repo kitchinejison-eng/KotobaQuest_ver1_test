@@ -1,0 +1,30 @@
+/* ことばクエスト R15.9 / Android R18: FREE専用広告枠（テスト）
+ * ゲーム中や採点中には表示しない。外部広告SDK・追跡通信は使用しない。
+ */
+.kq-ad-slot[hidden]{display:none!important}
+.kq-ad-slot{display:flex;align-items:center;justify-content:space-between;gap:12px;
+ margin:12px auto 16px;padding:10px 13px;box-sizing:border-box;width:100%;max-width:1100px;
+ border:1px solid #b4c6d4;border-radius:14px;background:#f7faff;color:#223f57;
+ box-shadow:0 2px 8px rgba(35,67,93,.07);font-family:inherit}
+.kq-ad-placeholder{display:flex;align-items:center;gap:10px;flex:1 1 auto;min-width:0}
+.kq-ad-label{border:1px solid #8a9fae;border-radius:5px;background:#fff;color:#31556c;
+ font-size:11px;font-weight:800;line-height:1.1;padding:4px 6px;flex:none;white-space:nowrap}
+.kq-ad-message{min-width:0;display:flex;flex-direction:column;gap:2px;line-height:1.4}
+.kq-ad-message strong{font-size:13px;color:#25445a;font-weight:800}
+.kq-ad-message span{font-size:11px;color:#52677a}
+.kq-ad-upgrade{flex:none;border:1px solid #9a761d;border-radius:10px;
+ background:#fff3d1;color:#593d05;font:inherit;font-size:12px;font-weight:800;
+ line-height:1.3;min-height:40px;padding:7px 12px;cursor:pointer}
+.kq-ad-upgrade:hover{background:#ffe5a0}
+.kq-ad-upgrade:focus-visible{outline:3px solid #2465a2;outline-offset:3px}
+.kq-ad-provider-host:empty{display:none}
+/* 外部配信を接続した場合はテストのプレースホルダーを置き換える */
+.kq-ad-slot[data-kq-ad-provider="active"] .kq-ad-placeholder{display:none}
+.kq-ad-slot[data-kq-ad-provider="active"] .kq-ad-provider-host{display:block;flex:1;min-width:0}
+:root[data-kq-plan="premium"] .kq-ad-slot{display:none!important}
+@media(max-width:680px){
+ .kq-ad-slot{flex-direction:column;align-items:stretch;gap:9px;padding:10px;margin:10px 0 14px}
+ .kq-ad-upgrade{align-self:flex-end;min-height:38px}
+ .kq-ad-message strong{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){.kq-ad-upgrade{transition:none}}
