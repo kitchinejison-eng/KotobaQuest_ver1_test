@@ -1,0 +1,263 @@
+{
+  "description": "ことばクエスト 構音筋ビジュアルナビゲーション お手本ボイス対応表",
+  "version": "1.2.1",
+  "audio_folder": "voice/articulation/",
+  "filename_convention": "lowercase Hepburn-like romaji with .mp3 extension",
+  "audio_rights": "ユーザー提供の録音（利用許諾は提供者側で管理してください）",
+  "source_archive": "レコーディング (2).zip",
+  "number_of_files": 28,
+  "files": [
+    {
+      "kana": "か",
+      "id": "ka",
+      "file": "voice/articulation/ka.mp3",
+      "original_filename": "か.mp3",
+      "duration_seconds": 0.94,
+      "size_bytes": 20206,
+      "sha256": "25005c23c88435d5b5aa0dabbd03aafff339dd4beffcea4534c723395ad4785f"
+    },
+    {
+      "kana": "き",
+      "id": "ki",
+      "file": "voice/articulation/ki.mp3",
+      "original_filename": "き.mp3",
+      "duration_seconds": 1.03,
+      "size_bytes": 21646,
+      "sha256": "86e707ccb6729b2b5b10521ce1a949276c75c71695d735b064fe9733caaaa798"
+    },
+    {
+      "kana": "く",
+      "id": "ku",
+      "file": "voice/articulation/ku.mp3",
+      "original_filename": "く.mp3",
+      "duration_seconds": 0.74,
+      "size_bytes": 15406,
+      "sha256": "910b0e9d2487942b5b443049b364171d36b74da3a9b0c30da8a4ac1b542ef967"
+    },
+    {
+      "kana": "け",
+      "id": "ke",
+      "file": "voice/articulation/ke.mp3",
+      "original_filename": "け.mp3",
+      "duration_seconds": 0.89,
+      "size_bytes": 18574,
+      "sha256": "62cecfb416aef4dd986fb356fe830d10cda7f68a4258b048c5c71ada2abe7ce0"
+    },
+    {
+      "kana": "こ",
+      "id": "ko",
+      "file": "voice/articulation/ko.mp3",
+      "original_filename": "こ.mp3",
+      "duration_seconds": 0.84,
+      "size_bytes": 17230,
+      "sha256": "a3121c3874d9a2b19fe976c4da43a73b386575f0ba810dca060293da8eb5807d"
+    },
+    {
+      "kana": "し",
+      "id": "shi",
+      "file": "voice/articulation/shi.mp3",
+      "original_filename": "し.mp3",
+      "duration_seconds": 0.86,
+      "size_bytes": 18262,
+      "sha256": "9894895accf503036b5347bfd057140b7288b4ee34aa1154b7e26348afbd8862"
+    },
+    {
+      "kana": "た",
+      "id": "ta",
+      "file": "voice/articulation/ta.mp3",
+      "original_filename": "た.mp3",
+      "duration_seconds": 0.98,
+      "size_bytes": 20206,
+      "sha256": "06730c2cb8259188b34797144d36470a6fe14835e8a13afb9ee7ed45ed89f50a"
+    },
+    {
+      "kana": "ち",
+      "id": "chi",
+      "file": "voice/articulation/chi.mp3",
+      "original_filename": "ち.mp3",
+      "duration_seconds": 0.94,
+      "size_bytes": 20014,
+      "sha256": "fe91870d39faf0c266fc928075e05956cee6d88519d64043b6ee5f2352ac4cd4"
+    },
+    {
+      "kana": "て",
+      "id": "te",
+      "file": "voice/articulation/te.mp3",
+      "original_filename": "て.mp3",
+      "duration_seconds": 0.96,
+      "size_bytes": 19630,
+      "sha256": "2cf47888a5962ae1758c90ad93b3186c83f65501a498c0146af517f982be16c7"
+    },
+    {
+      "kana": "と",
+      "id": "to",
+      "file": "voice/articulation/to.mp3",
+      "original_filename": "と.mp3",
+      "duration_seconds": 0.77,
+      "size_bytes": 15886,
+      "sha256": "68a9469eda3076a9049f188dc3ea8f62578e8eaf5d768423b437f030e122a0b9"
+    },
+    {
+      "kana": "な",
+      "id": "na",
+      "file": "voice/articulation/na.mp3",
+      "original_filename": "な.mp3",
+      "duration_seconds": 0.89,
+      "size_bytes": 17518,
+      "sha256": "ad3af258771e28ab21602f4e850396285c12c47d3ff97341133a6e149937bbf1"
+    },
+    {
+      "kana": "ね",
+      "id": "ne",
+      "file": "voice/articulation/ne.mp3",
+      "original_filename": "ね.mp3",
+      "duration_seconds": 0.91,
+      "size_bytes": 18814,
+      "sha256": "290c9d9df6e4a934166f5d631a10d50a3136db104950190661171ba1822174b6"
+    },
+    {
+      "kana": "は",
+      "id": "ha",
+      "file": "voice/articulation/ha.mp3",
+      "original_filename": "は.mp3",
+      "duration_seconds": 0.91,
+      "size_bytes": 20398,
+      "sha256": "2ff78bed508421c85e622e282c4fae3fa5f6acc33422b46e7d466086dad43a2e"
+    },
+    {
+      "kana": "へ",
+      "id": "he",
+      "file": "voice/articulation/he.mp3",
+      "original_filename": "へ.mp3",
+      "duration_seconds": 0.98,
+      "size_bytes": 19486,
+      "sha256": "6d9162d6c60720970d1619de8d8e7f0d0aebc3e4e1566bac169337795156e00f"
+    },
+    {
+      "kana": "ほ",
+      "id": "ho",
+      "file": "voice/articulation/ho.mp3",
+      "original_filename": "ほ.mp3",
+      "duration_seconds": 0.96,
+      "size_bytes": 19438,
+      "sha256": "2e4478fd8caac4a34f398f448c48dc02485c4f1570199d2dd622300ced8944a8"
+    },
+    {
+      "kana": "ま",
+      "id": "ma",
+      "file": "voice/articulation/ma.mp3",
+      "original_filename": "ま.mp3",
+      "duration_seconds": 0.89,
+      "size_bytes": 17758,
+      "sha256": "6991e69c7d043ea802261fadb210709b92954ca3a9930df8caf9af04e65ef693"
+    },
+    {
+      "kana": "み",
+      "id": "mi",
+      "file": "voice/articulation/mi.mp3",
+      "original_filename": "み.mp3",
+      "duration_seconds": 1.7,
+      "size_bytes": 32782,
+      "sha256": "8d27faa09d49b16b975a636d18ff76938104667695012460c332e76ecd736cb3"
+    },
+    {
+      "kana": "む",
+      "id": "mu",
+      "file": "voice/articulation/mu.mp3",
+      "original_filename": "む.mp3",
+      "duration_seconds": 0.84,
+      "size_bytes": 16366,
+      "sha256": "9c88905d798439ba04de0ff832b247ccca9797a4498750a5c030a9d7b59b0327"
+    },
+    {
+      "kana": "め",
+      "id": "me",
+      "file": "voice/articulation/me.mp3",
+      "original_filename": "め.mp3",
+      "duration_seconds": 0.77,
+      "size_bytes": 15550,
+      "sha256": "582a1786e863d640031a8f41e0e30474aa66be194493659d1ab0011fb2792f3a"
+    },
+    {
+      "kana": "も",
+      "id": "mo",
+      "file": "voice/articulation/mo.mp3",
+      "original_filename": "も.mp3",
+      "duration_seconds": 0.91,
+      "size_bytes": 17326,
+      "sha256": "b4fae16d5e64d2f18dbf528882adb70e0dfec0cccecf6227c64e92f91c960121"
+    },
+    {
+      "kana": "や",
+      "id": "ya",
+      "file": "voice/articulation/ya.mp3",
+      "original_filename": "や.mp3",
+      "duration_seconds": 0.74,
+      "size_bytes": 15262,
+      "sha256": "4b59b32cad85586f3cd24ccd4e516f23c489f7535d9b2c12ed6cc818a0c846c1"
+    },
+    {
+      "kana": "ゆ",
+      "id": "yu",
+      "file": "voice/articulation/yu.mp3",
+      "original_filename": "ゆ.mp3",
+      "duration_seconds": 0.89,
+      "size_bytes": 17494,
+      "sha256": "6ca435fd1465d766c7356ec78b5560547ba0e7a43c627799a85075809b371205"
+    },
+    {
+      "kana": "よ",
+      "id": "yo",
+      "file": "voice/articulation/yo.mp3",
+      "original_filename": "よ.mp3",
+      "duration_seconds": 0.82,
+      "size_bytes": 16798,
+      "sha256": "1abcdef2d11ddb50672f13b27d877bd16276958b9ef6e7d85b56c20099278381"
+    },
+    {
+      "kana": "ファ",
+      "id": "fa",
+      "file": "voice/articulation/fa.mp3",
+      "original_filename": "ファ.mp3",
+      "duration_seconds": 0.74,
+      "size_bytes": 16654,
+      "sha256": "66f315b2e010978d33b8e7844e34abc4b431d610ee9888cbcde64b227739aa7b"
+    },
+    {
+      "kana": "フィ",
+      "id": "fi",
+      "file": "voice/articulation/fi.mp3",
+      "original_filename": "フィ.mp3",
+      "duration_seconds": 0.89,
+      "size_bytes": 14782,
+      "sha256": "7915d39014aa9b39ba24b8c0b82989112fc5057264280f88444fd2a2a35a7954"
+    },
+    {
+      "kana": "フェ",
+      "id": "fe",
+      "file": "voice/articulation/fe.mp3",
+      "original_filename": "フェ.mp3",
+      "duration_seconds": 0.98,
+      "size_bytes": 19918,
+      "sha256": "48791dd3de077b90fb7add5550853665b0018d37fdcf60146cc370d148e1b4fd"
+    },
+    {
+      "kana": "フォ",
+      "id": "fo",
+      "file": "voice/articulation/fo.mp3",
+      "original_filename": "フォ.mp3",
+      "duration_seconds": 0.74,
+      "size_bytes": 15310,
+      "sha256": "4c8045b770eee4bf1e8f1b3b4341108ee2f97a2708d9d58e26bdacb8601dfad1"
+    },
+    {
+      "kana": "ヴァ",
+      "id": "va",
+      "file": "voice/articulation/va.mp3",
+      "original_filename": "ヴァ.mp3",
+      "duration_seconds": 0.62,
+      "size_bytes": 13630,
+      "sha256": "60d32837a0d5b0435c86d404c8a9e40ca0b1f13ab24298ad8e9032ccd401eb32"
+    }
+  ]
+}
