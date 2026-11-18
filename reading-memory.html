@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>ことばクエスト｜朗読・想起：トレーニング</title>
+    <link rel="stylesheet" href="styles/training/reading-memory-tailwind.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="styles/training/reading-memory-ver120.css?v=r2">
+    <style>
+        
+        
+        body {
+            font-family: 'Noto Sans CJK JP', 'Yu Gothic', 'Hiragino Kaku Gothic ProN', sans-serif;
+            background-color: #fdfbf7;
+            color: #2d3748;
+        }
+
+        /* カスタムボタンアニメーション */
+        .btn-active {
+            transition: all 0.15s ease-in-out;
+        }
+        .btn-active:active {
+            transform: scale(0.95);
+        }
+
+        /* 〇×判定アニメーション */
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pop-in {
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        /* 強調ルビ・発音促通スタイル */
+        .phonetics-k { color: #d97706; font-weight: bold; } /* 軟口蓋音 (カ行) */
+        .phonetics-t { color: #2563eb; font-weight: bold; } /* 歯茎音 (タ行・ナ行・ラ行) */
+        /* 結果画面の記録ボタン：スクロールしなくても気づきやすい緑色の大きなボタン */
+        #training-records-btn.rm-records-button {
+            box-sizing: border-box !important;
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            min-height: 76px !important;
+            margin: 14px auto 18px !important;
+            padding: 16px 18px !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            border: 3px solid #14532d !important;
+            border-radius: 18px !important;
+            background: #16803c !important;
+            color: #ffffff !important;
+            box-shadow: 0 5px 0 #14532d, 0 8px 18px rgba(20, 83, 45, .22) !important;
+            font-size: clamp(19px, 4.5vw, 24px) !important;
+            line-height: 1.25 !important;
+            font-weight: 900 !important;
+            text-align: left !important;
+            cursor: pointer !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+        #training-records-btn.rm-records-button:active { transform: translateY(2px); box-shadow: 0 3px 0 #14532d !important; }
+        #training-records-btn .rm-records-icon { flex: 0 0 auto; font-size: 31px; line-height: 1; }
+        #training-records-btn .rm-records-button-text { flex: 1 1 auto; color: #fff !important; }
+        #training-records-btn .rm-records-button-text small { display: block; margin-top: 4px; font-size: 14px; font-weight: 700; color: #e9ffef !important; }
+        #training-records-btn .rm-records-arrow { flex: 0 0 auto; font-size: 36px; font-weight: 900; line-height: 1; color: #fff !important; }
+        @media (max-width: 520px) { #training-records-btn.rm-records-button { min-height: 82px !important; padding: 15px 12px !important; gap: 10px !important; } }
+    </style>
+  <link rel="stylesheet" href="styles/base/browser-responsive.css">
+  <link rel="stylesheet" href="styles/ui/daily-streak.css?v=108">
+  <link rel="stylesheet" href="styles/ui/veta17-theme.css?v=2">
+<!-- 【開発者向け】JSとCSSは用途別に scripts/・styles/ に整理されています。
+     <script>の順番を変えると画面初期化・学習記録・3Dに影響します。docs/スクリプト読込順.md を参照してください。 -->
+  <link rel="stylesheet" href="styles/ui/premium-theme-v121.css?v=121-premium-r1">
+  <script src="scripts/system/premium-plan-v121.js?v=121-premium-r1" data-icon-root="images/app-icons/"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+<script src="scripts/ui/veta14-theme-sync.js?v=veta17"></script>
+
+
+    <!-- ヘッダー -->
+    <header class="bg-amber-100 border-b-4 border-amber-300 p-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-3xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <button id="back-to-kotoba" type="button" onclick="returnToKotobaQuest()" class="bg-white hover:bg-amber-50 text-amber-900 text-base sm:text-lg font-bold px-4 py-3 rounded-xl shadow-md border-2 border-amber-300 btn-active">
+                ← ことばクエストへ もどる
+            </button>
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-amber-900 flex items-center gap-2">
+                <i class="fa-solid font-bold fa-book-open text-amber-600"></i>
+                <span id="story-page-title">朗読・想起：トレーニング</span>
+            </h1>
+            <div class="flex gap-2">
+                <button id="tab-story-btn" onclick="switchTab('story')" class="px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-600 bg-amber-500 text-white shadow-md btn-active">
+                    📖 おはなし
+                </button>
+                <button id="tab-quiz-btn" onclick="switchTab('quiz')" class="px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-300 bg-white text-amber-800 shadow-md btn-active">
+                    ❓ くいず
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主コンテンツ領域 -->
+    <main class="max-w-3xl mx-auto w-full p-4 sm:p-6 flex-grow">
+
+        <!-- おはなしセクション -->
+        <section id="story-section" class="space-y-6">
+            <div id="story-title-label" class="text-2xl sm:text-3xl font-black text-amber-900 text-center">朗読・想起：トレーニング</div>
+            <!-- 読上げ・設定コントロール -->
+            <div class="bg-amber-50 p-4 sm:p-5 rounded-2xl border-2 border-amber-200 flex flex-wrap justify-between items-center gap-3 shadow-sm">
+                <div class="flex items-center gap-3">
+                    <button onclick="readAllStory()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-lg sm:text-xl font-bold px-5 py-3 rounded-xl shadow-md flex items-center gap-2 btn-active">
+                        <i class="fa-solid fa-volume-high text-2xl"></i>
+                        <span>ぜんぶ よむ</span>
+                    </button>
+                    <button onclick="stopSpeech()" class="bg-rose-500 hover:bg-rose-600 text-white text-base sm:text-lg font-bold px-4 py-3 rounded-xl shadow-md btn-active">
+                        <i class="fa-solid fa-square"></i>
+                        <span>とめる</span>
+                    </button>
+                </div>
+                <div class="text-xs sm:text-sm text-gray-600 font-bold bg-white px-3 py-2 rounded-lg border border-amber-200">
+                    💡 画面は漢字まじり、音声はひらがなで朗読します
+                </div>
+                <div id="voice-status" class="w-full text-sm font-bold text-emerald-700" role="status" aria-live="polite"></div>
+            </div>
+
+            <!-- 本文表示エリア -->
+            <div id="story-body-wrap" class="bg-white p-6 sm:p-8 rounded-3xl border-4 border-amber-200 shadow-lg text-2xl sm:text-3xl leading-relaxed sm:leading-loose tracking-wide space-y-6">
+                <div id="story-body" class="reading-memory-story-body"></div>
+            </div>
+
+            <!-- クイズへ進むボタン -->
+            <div class="text-center pt-4">
+                <button onclick="switchTab('quiz')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white text-2xl font-black px-10 py-5 rounded-2xl shadow-xl border-b-4 border-amber-700 btn-active flex items-center justify-center gap-3 mx-auto">
+                    <span>おはなしを おぼえたら くいずへ！</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- クイズセクション -->
+        <section id="quiz-section" class="hidden space-y-6">
+            
+            <!-- 進捗メーター -->
+            <div class="bg-white p-4 rounded-2xl border-2 border-amber-200 shadow-sm flex items-center justify-between gap-4">
+                <div class="text-lg sm:text-xl font-bold text-amber-900">
+                    もんだい <span id="current-q-num" class="text-3xl text-amber-600 font-black">1</span> / 5
+                </div>
+                <div class="flex-grow max-w-xs bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div id="progress-bar" class="bg-amber-500 h-full w-1/5 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- クイズカード -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border-4 border-amber-300 shadow-xl space-y-6 relative">
+                
+                <!-- 質問テキスト -->
+                <div class="flex items-start gap-3">
+                    <span class="bg-amber-500 text-white font-black text-xl sm:text-2xl px-3 py-1 rounded-xl shrink-0 mt-1">
+                        もんだい <span id="q-number-label">1</span>
+                    </span>
+                    <h2 id="quiz-question" class="text-2xl sm:text-3xl font-black text-gray-800 leading-snug">
+                        <!-- 問題文がここに入ります -->
+                    </h2>
+                </div>
+
+                <!-- 音声読み上げボタン -->
+                <div class="flex justify-end">
+                    <button onclick="speakCurrentQuestion()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold px-4 py-2 rounded-xl text-lg flex items-center gap-2 border border-amber-300 btn-active">
+                        <i class="fa-solid fa-volume-high text-amber-600"></i>
+                        <span>もんだいを きく</span>
+                    </button>
+                </div>
+
+                <hr class="border-amber-100">
+
+                <!-- 〇× 回答ボタン -->
+                <div id="options-container" class="grid grid-cols-2 gap-4 sm:gap-6 pt-2">
+                    <button onclick="handleAnswer(true)" class="bg-red-50 hover:bg-red-100 border-4 border-red-400 hover:border-red-500 text-red-600 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center gap-2 shadow-lg btn-active">
+                        <i class="fa-regular fa-circle text-6xl sm:text-8xl font-black"></i>
+                        <span class="text-2xl sm:text-3xl font-black">〇（ただしい）</span>
+                    </button>
+
+                    <button onclick="handleAnswer(false)" class="bg-blue-50 hover:bg-blue-100 border-4 border-blue-400 hover:border-blue-500 text-blue-600 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center gap-2 shadow-lg btn-active">
+                        <i class="fa-solid fa-xmark text-6xl sm:text-8xl font-black"></i>
+                        <span class="text-2xl sm:text-3xl font-black">✕（ちがう）</span>
+                    </button>
+                </div>
+
+                <button id="readingSkipBtn" onclick="skipReadingQuestion()" type="button" class="mt-5 w-full rounded-2xl border-2 border-amber-500 bg-amber-50 text-amber-900 font-bold text-xl px-5 py-4">この問題をスキップ →</button>
+                <!-- 回答後のフィードバック領域 -->
+                <div id="feedback-area" class="hidden p-6 rounded-2xl border-4 pop-in space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div id="feedback-icon" class="text-5xl sm:text-6xl"></div>
+                        <div>
+                            <div id="feedback-title" class="text-3xl sm:text-4xl font-black"></div>
+                            <div id="feedback-explanation" class="text-xl sm:text-2xl font-bold mt-2 text-gray-700"></div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex justify-end">
+                        <button id="next-btn" onclick="nextQuestion()" class="bg-amber-500 hover:bg-amber-600 text-white text-xl sm:text-2xl font-black px-8 py-4 rounded-xl shadow-lg border-b-4 border-amber-700 btn-active flex items-center gap-2">
+                            <span>つぎの もんだいへ</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- おはなし確認用折りたたみカード -->
+            <details class="bg-amber-50 rounded-2xl border-2 border-amber-200 p-4">
+                    <summary class="text-lg font-bold text-amber-900 cursor-pointer hover:text-amber-700">🔍 おはなしを もういちど かくにんする</summary>
+                    <div id="story-review" class="mt-4 text-lg sm:text-xl leading-relaxed text-gray-800 bg-white p-4 rounded-xl border border-amber-200 space-y-2"></div>
+                </details>
+
+        </section>
+
+        <!-- 結果発表セクション -->
+        <section id="result-section" class="hidden text-center space-y-8 py-6">
+            <div class="bg-white p-8 sm:p-10 rounded-3xl border-4 border-amber-300 shadow-xl space-y-6 max-w-xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-black text-amber-900">🎉 おつかれさまでした！</h2>
+                
+                <div class="text-2xl sm:text-3xl font-bold text-gray-700">
+                    あなたの とくてん
+                </div>
+
+                <div class="text-6xl sm:text-7xl font-black text-amber-600">
+                    <span id="score-display">0</span> / <span id="result-total">5</span> もん せいかい
+                </div>
+
+                <p id="score-comment" class="text-xl sm:text-2xl font-bold text-gray-800 bg-amber-50 p-4 rounded-2xl border border-amber-200">
+                    <!-- メッセージがここに入ります -->
+                </p>
+                <div id="readingDailyStreak" class="daily-streak-slot"></div>
+
+                <button id="training-records-btn" type="button" onclick="openTrainingRecords()" class="rm-records-button" style="display:flex;visibility:visible;opacity:1;">
+                    <span class="rm-records-icon" aria-hidden="true">📊</span>
+                    <span class="rm-records-button-text">れんしゅうの きろくを みる<small>これまでの きろくを かくにん</small></span>
+                    <span class="rm-records-arrow" aria-hidden="true">›</span>
+                </button>
+
+                <div id="result-review" class="text-left bg-white rounded-2xl border-2 border-amber-200 p-4 space-y-3"></div>
+
+                <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+                    <button onclick="restartQuiz()" class="bg-amber-500 hover:bg-amber-600 text-white text-xl font-black px-8 py-4 rounded-2xl shadow-lg border-b-4 border-amber-700 btn-active flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>もういちど くいずを する</span>
+                    </button>
+                    <button onclick="switchTab('story')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xl font-black px-8 py-4 rounded-2xl shadow-lg border-b-4 border-emerald-800 btn-active flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-book"></i>
+                        <span>おはなしを よむ</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="bg-amber-100 border-t border-amber-200 p-4 text-center text-amber-800 text-sm font-bold mt-8">
+        ことばクエスト｜朗読・想起：トレーニング
+    </footer>
+
+    <script src="scripts/system/daily-streak.js?v=108"></script>
+    <script src="scripts/system/user-profile.js?v=veta16-profile"></script>
+    <script src="scripts/learning/learning-mode-veta12.js?v=r154"></script>
+    <script src="scripts/learning/difficulty-veta11.js?v=pc-r15-5-level-auto-20261118"></script>
+    <script src="scripts/learning/adaptive-learning.js?v=veta12"></script>
+  <script src="scripts/learning/personal-review-r154.js?v=20261118"></script>
+    <script src="scripts/learning/unified-learning-veta1.js?v=r154"></script>
+    <script src="scripts/audio/kotoba-audio-common-r5.js?v=r5"></script>
+<script>
+        // 朗読・想起クイズは「課題ごとに独立」して動作します。
+        // URL: reading-memory.html?story=1 / 2 / 3
+        var STORY_ID = (new URLSearchParams(window.location.search).get('story') || '1');
+
+        var STORIES = {
+            "1": {
+                title: "朗読・想起① かぼちゃおじいさんとわかめおじいさん",
+                character: "かぼちゃおじいさん・わかめおじいさん",
+                story: [
+                    "かぼちゃおじいさんと わかめおじいさんは、もりへ えんそくに でかけます。おおきな りゅっくに、おにぎりを つめました。",
+                    "かぼちゃおじいさんの おにぎりの ぐは、あかい うめぼしです。すっぱいけれど、げんきが でます。",
+                    "わかめおじいさんの おにぎりの ぐは、こうばしい こんぶです。こんぶの たれが、ごはんに よく しみて います。",
+                    "ふたりは たかい おかのうえで、かぜを かんじながら、おにぎりを たけのこの かわから だして、おいしく たべました。"
+                ],
+                review: [
+                    "・ふたりは、もりへ えんそくに でかけました。",
+                    "・かぼちゃおじいさんの ぐは、うめぼしです。",
+                    "・わかめおじいさんの ぐは、こんぶです。",
+                    "・たかい おかのうえで おにぎりを たべました。",
+                    "・おにぎりは たけのこの かわから だしました。"
+                ],
+                quiz: [
+                    { q: "かぼちゃおじいさんとわかめおじいさんは、うみへあそびにいきました。", a: false, exp: "ばつ：うみではなく、「もり」へ いきました。" },
+                    { q: "かぼちゃおじいさんのおにぎりのぐは、あかい「うめぼし」でした。", a: true, exp: "まる：かぼちゃおじいさんの ぐは、すっぱい うめぼしです。" },
+                    { q: "わかめおじいさんのおにぎりのぐは、「しゃけ」でした。", a: false, exp: "ばつ：しゃけではなく、こうばしい「こんぶ」です。" },
+                    { q: "ふたりは、たかいおかのうえでおにぎりをたべました。", a: true, exp: "まる：たかい おかのうえで、かぜを かんじながら たべました。" },
+                    { q: "おにぎりは、さらんらっぷにつつまれていました。", a: false, exp: "ばつ：さらんらっぷではなく、「たけのこのかわ」でした。" }
+                ]
+            },
+            "2": {
+                title: "朗読・想起② しらすじいさんの温泉旅行（あんぱん）",
+                character: "しらすじいさん",
+                story: [
+                    "しらすじいさんは、あきのひにあたみのおんせんへでかけました。",
+                    "いきのでんしゃでは、だいすきなあんぱんをたべました。",
+                    "りょかんにつくと、まずあたたかいおんせんにはいってのんびりすごしました。",
+                    "ゆうしょくには、しんせんなおさしみときんめだいのにつけをたべてだいまんぞく。",
+                    "よるはふかふかのおふとんで、あさまでぐっすりねむりました。"
+                ],
+                review: [
+                    "・あきのひに、あたみのおんせんへでかけました。",
+                    "・でんしゃでは、だいすきなあんぱんをたべました。",
+                    "・りょかんにつくと、まずおんせんにはいりました。",
+                    "・ゆうしょくは、おさしみときんめだいのにつけでした。",
+                    "・よるはあさまでぐっすりねむりました。"
+                ],
+                quiz: [
+                    { q: "しらすおじいさんがいったのは、あきのおんせんりょこうである。", a: true, exp: "まる：あきのひにあたみのおんせんへでかけました。" },
+                    { q: "でんしゃのなかでたべたのは、かれーぱんである。", a: false, exp: "ばつ：でんしゃのなかでたべたのはだいすきな「あんぱん」です。" },
+                    { q: "りょかんについて、さいしょにおふろ（おんせん）にはいった。", a: true, exp: "まる：りょかんにつくと、まずあたたかいおんせんにはいってのんびりすごしました。" },
+                    { q: "ゆうしょくには、はんばーぐをたべた。", a: false, exp: "ばつ：ゆうしょくは「おさしみときんめだいのにつけ」でした。" },
+                    { q: "よるはあさまでぐっすりねむることができた。", a: true, exp: "まる：よるはふかふかのおふとんで、あさまでぐっすりねむりました。" }
+                ]
+            },
+            "3": {
+                title: "朗読・想起③ 図書館の忘れ物（順番・理由）",
+                character: "あおいさん",
+                story: [
+                    "どようびのごご、あおいさんはしりつとしょかんにいきました。あおいおりたたみがさをもっていました。",
+                    "いりぐちでかりたいほんをさがし、りょうりのほんとはなのしゃしんしゅうをえらびました。",
+                    "まどぎわのせきですこしほんをよみ、かえるまえにうけつけでにさつをかりました。",
+                    "そとにでようとしたとき、かさがないことにきづきました。あおいさんはうけつけのひとにそうだんしました。",
+                    "うけつけのひとといっしょにまどぎわのせきへもどると、いすのよこにかさがありました。あおいさんはおれいをいいました。",
+                    "かえりみちであめがふりでしました。あおいさんはみつかったあおいかさをひらいて、ぬれずにかえりました。",
+                ],
+                review: [
+                    "・どようびのごご、あおいさんはとしょかんへいきました。",
+                    "・りょうりのほんとはなのしゃしんしゅうをえらびました。",
+                    "・まどぎわのせきでよみ、うけつけでにさつをかりました。",
+                    "・かさをわすれたことにきづき、うけつけでそうだんしました。",
+                    "・いすのよこでかさをみつけ、かえりのあめでつかいました。",
+                ],
+                quiz: [
+                    { q: "あおいさんがとしょかんにいったのはどようびのごごです。", a: true, exp: "まる：どようびのごごにとしょかんへでかけました。" },
+                    { q: "あおいさんがえらんだのはりょうりのほんとはなのしゃしんしゅうです。", a: true, exp: "まる：かりるためにこのにさつをえらびました。" },
+                    { q: "あおいさんはほんをえらぶまえに、うけつけでにさつをかりました。", a: false, exp: "ばつ：ほんをさがしてえらび、そのあとでかりました。" },
+                    { q: "かさがないことにきづいたのは、そとへでようとしたときです。", a: true, exp: "まる：かえろうとしたときにきづきました。" },
+                    { q: "わすれたかさをさがすとき、あおいさんはうけつけにそうだんしました。", a: true, exp: "まる：じぶんだけでさがしつづけず、うけつけでそうだんしました。" },
+                ]
+            }
+        };
+
+        // VETA10：各おはなしの内容に即した問題候補を5問→20問に拡張。
+        // 1回の負担を増やさないよう、毎回ランダムに5問を選びます。
+        STORIES["1"].quiz.push(
+            { q: "ふたりは、もりへえんそくにでかけました。", a: true, exp: "まる：ふたりがでかけたさきはもりです。" },
+            { q: "ふたりは、おおきなりゅっくにおにぎりをつめました。", a: true, exp: "まる：しゅっぱつするとき、おおきなりゅっくにおにぎりをいれました。" },
+            { q: "りゅっくにつめたたべものは、さんどいっちでした。", a: false, exp: "ばつ：もっていったのは、おにぎりです。" },
+            { q: "かぼちゃおじいさんのおにぎりには、こんぶがはいっていました。", a: false, exp: "ばつ：かぼちゃおじいさんのぐは、うめぼしです。" },
+            { q: "うめぼしは、すっぱいあじがしました。", a: true, exp: "まる：おはなしには、うめぼしがすっぱいとかかれています。" },
+            { q: "かぼちゃおじいさんは、うめぼしをたべるとげんきがでるとかんじました。", a: true, exp: "まる：すっぱいけれど、げんきがでるとかかれています。" },
+            { q: "わかめおじいさんのおにぎりのぐは、こんぶでした。", a: true, exp: "まる：わかめおじいさんのぐは、こんぶです。" },
+            { q: "わかめおじいさんのおにぎりは、あまいちょこれーとあじでした。", a: false, exp: "ばつ：ぐはこうばしいこんぶです。" },
+            { q: "こんぶのたれは、ごはんにしみていました。", a: true, exp: "まる：こんぶのたれがごはんによくしみていました。" },
+            { q: "ふたりは、ひくいちかしつでおにぎりをたべました。", a: false, exp: "ばつ：ふたりは、たかいおかのうえでたべました。" },
+            { q: "ふたりは、おかのうえでかぜをかんじました。", a: true, exp: "まる：たかいおかのうえで、かぜをかんじながらたべました。" },
+            { q: "ふたりは、れすとらんのせきでおにぎりをたべました。", a: false, exp: "ばつ：たべたばしょは、おかのうえです。" },
+            { q: "おにぎりは、たけのこのかわからとりだしました。", a: true, exp: "まる：たけのこのかわからだしてたべました。" },
+            { q: "おにぎりは、きのはこからとりだしました。", a: false, exp: "ばつ：おにぎりは、たけのこのかわからだしました。" },
+            { q: "ふたりは、おにぎりをおいしくたべました。", a: true, exp: "まる：おはなしには、おいしくたべたとかかれています。" }
+        );
+        STORIES["2"].quiz.push(
+            { q: "しらすじいさんのりょこうのきせつはあきでした。", a: true, exp: "まる：あきのひにおんせんへでかけました。" },
+            { q: "りょこうさきはほっかいどうのおんせんでした。", a: false, exp: "ばつ：りょこうさきはあたみです。" },
+            { q: "しらすじいさんはあたみへいきました。", a: true, exp: "まる：あたみのおんせんをおとずれました。" },
+            { q: "いきののりものはでんしゃでした。", a: true, exp: "まる：いきのでんしゃのなかでたべものをたべました。" },
+            { q: "しらすじいさんはでんしゃで、しらすせんべいをたべました。", a: false, exp: "ばつ：このおはなしでは、あんぱんをたべました。" },
+            { q: "でんしゃでたべたあんぱんは、しらすじいさんのすきなたべものでした。", a: true, exp: "まる：だいすきなあんぱんとかかれています。" },
+            { q: "りょかんについてすぐ、まずかいものへいきました。", a: false, exp: "ばつ：りょかんについて、まずおんせんにはいりました。" },
+            { q: "りょかんでは、あたたかいおんせんにはいりました。", a: true, exp: "まる：あたたかいおんせんにはいってすごしました。" },
+            { q: "おんせんでは、のんびりすごしました。", a: true, exp: "まる：おんせんにはいって、のんびりしました。" },
+            { q: "ゆうしょくにはしんせんなおさしみがでました。", a: true, exp: "まる：ゆうしょくはおさしみときんめだいのにつけでした。" },
+            { q: "ゆうしょくには、きんめだいのにつけもありました。", a: true, exp: "まる：きんめだいのにつけをたべました。" },
+            { q: "しらすじいさんはゆうしょくにまんぞくできませんでした。", a: false, exp: "ばつ：ゆうしょくにだいまんぞくしたとかかれています。" },
+            { q: "よるは、かたいゆかのうえでねむりました。", a: false, exp: "ばつ：ふかふかのおふとんでねむりました。" },
+            { q: "よるにねむったばしょは、ふかふかのおふとんでした。", a: true, exp: "まる：ふかふかのおふとんでねました。" },
+            { q: "しらすじいさんは、よなかずっとおきていました。", a: false, exp: "ばつ：あさまでぐっすりねむりました。" }
+        );
+        STORIES["3"].quiz.push(
+            {q:"あおいさんはあさはやくとしょかんへいきました。",a:false,exp:"ばつ：でかけたのはどようびのごごです。"},            {q:"としょかんへもっていったかさはあおいろでした。",a:true,exp:"まる：あおいおりたたみがさをもっていました。"},            {q:"りょうりのほんとどうぶつのしゃしんしゅうをえらびました。",a:false,exp:"ばつ：しゃしんしゅうははなのしゃしんしゅうです。"},            {q:"ほんはさんさつかりました。",a:false,exp:"ばつ：かりたのはにさつです。"},            {q:"ほんをよんだせきはまどぎわでした。",a:true,exp:"まる：まどぎわのせきですこしよみました。"},            {q:"かりるてつづきをしたのは、かえるまえです。",a:true,exp:"まる：かえるまえにうけつけでかりました。"},            {q:"かさがないときづいたばしょは、じたくのげんかんです。",a:false,exp:"ばつ：としょかんをでようとしたときです。"},            {q:"あおいさんは、かさがないときづいて、すぐにうけつけのひとにそうだんしました。",a:true,exp:"まる：うけつけのひとにそうだんしたとかかれています。"},            {q:"かさをさがすとき、ひとりでえきまでもどりました。",a:false,exp:"ばつ：うけつけのひとといっしょにせきへもどりました。"},            {q:"かさがみつかったのは、まどぎわのせきのいすのよこです。",a:true,exp:"まる：かさはいすのよこにありました。"},            {q:"かさはとしょかんのおくじょうにおいてありました。",a:false,exp:"ばつ：まどぎわのせきのいすのよこです。"},            {q:"かさがみつかったあと、あおいさんはおれいをいいました。",a:true,exp:"まる：いっしょにさがしたうけつけのひとへおれいをいいました。"},            {q:"かえりみちでははれたままでした。",a:false,exp:"ばつ：かえりみちであめがふりでしました。"},            {q:"かえりのあめでは、みつかったかさをつかいました。",a:true,exp:"まる：あおいかさをひらいてかえりました。"},            {q:"あめがふったので、かりたほんをとしょかんへかえしました。",a:false,exp:"ばつ：かえるまえににさつをかりたままかえりました。"}
+        );
+
+        // VETA11: 読み聞かせ本文に書かれた事実と、因果・順序を照らし合わせる追加45問。
+        // 同じ物語の説明と矛盾する内容は、不正解として出題する。
+        STORIES['1'].quiz.push(
+            {q:'えんそくにでかけたのは、かぼちゃおじいさんひとりだけでした。',a:false,exp:'ばつ：わかめおじいさんもいっしょでした。'},
+            {q:'ふたりはえんそくのおべんとうにおにぎりをえらびました。',a:true,exp:'まる：りゅっくにおにぎりをつめました。'},
+            {q:'りゅっくはちいさかったので、おにぎりをいれられませんでした。',a:false,exp:'ばつ：おおきなりゅっくにおにぎりをいれました。'},
+            {q:'かぼちゃおじいさんとわかめおじいさんでは、おにぎりのぐがちがいました。',a:true,exp:'まる：うめぼしとこんぶでちがいました。'},
+            {q:'かぼちゃおじいさんのおにぎりのぐは、あまいじゃむでした。',a:false,exp:'ばつ：あかいうめぼしでした。'},
+            {q:'わかめおじいさんは、こんぶのおにぎりをもっていきました。',a:true,exp:'まる：わかめおじいさんのぐはこんぶです。'},
+            {q:'ふたりがたべたとき、かぜがふいていました。',a:true,exp:'まる：おかのうえでかぜをかんじました。'},
+            {q:'えんそくのもくてきちは、うみべのすなはまでした。',a:false,exp:'ばつ：もりへでかけました。'},
+            {q:'おにぎりをたべたばしょはもりのなかのたかいおかでした。',a:true,exp:'まる：たかいおかのうえでたべました。'},
+            {q:'こんぶのたれは、ごはんにほとんどついていませんでした。',a:false,exp:'ばつ：ごはんによくしみていました。'},
+            {q:'うめぼしはすっぱく、げんきがでるぐとしてしょうかいされました。',a:true,exp:'まる：そのようにせつめいされています。'},
+            {q:'ふたりはたべるまえに、たけのこのかわからおにぎりをとりだしました。',a:true,exp:'まる：つつみからだしてたべました。'},
+            {q:'こんぶのおにぎりをよういしたのは、かぼちゃおじいさんでした。',a:false,exp:'ばつ：こんぶはわかめおじいさんのおにぎりです。'},
+            {q:'ふたりはおにぎりのあじにまんぞくしました。',a:true,exp:'まる：おいしくたべたとかかれています。'},
+            {q:'おにぎりをたべたとき、ふたりはおくないのれすとらんにいました。',a:false,exp:'ばつ：たかいおかのうえでたべました。'}
+        );
+        STORIES['2'].quiz.push(
+            {q:'あたみへいったのはあきのあるひでした。',a:true,exp:'まる：あきのひにでかけました。'},
+            {q:'しらすじいさんはりょこうでれっしゃをつかいませんでした。',a:false,exp:'ばつ：いきのでんしゃであんぱんをたべました。'},
+            {q:'でんしゃにのっているあいだにすきなたべものをたべました。',a:true,exp:'まる：あんぱんをたべています。'},
+            {q:'このおはなしででんしゃのおやつは、しらすせんべいでした。',a:false,exp:'ばつ：このおはなしでは、あんぱんです。'},
+            {q:'しゅくはくしたりょかんでは、おんせんにはいりました。',a:true,exp:'まる：とうちゃくごにおんせんへはいりました。'},
+            {q:'りょかんについたちょくごに、まずゆうしょくをたべました。',a:false,exp:'ばつ：まずおんせんにはいりました。'},
+            {q:'しらすじいさんは、おんせんでゆったりすごしました。',a:true,exp:'まる：のんびりすごしました。'},
+            {q:'ゆうしょくはさしみときんめだいのにつけでした。',a:true,exp:'まる：ふたつのりょうりがでました。'},
+            {q:'きんめだいはにつけではなく、かならずやきざかなでした。',a:false,exp:'ばつ：きんめだいのにつけでした。'},
+            {q:'ゆうしょくについて、しらすじいさんはだいまんぞくでした。',a:true,exp:'まる：だいまんぞくとかかれています。'},
+            {q:'りょかんでねむったのは、かたいべんちのうえでした。',a:false,exp:'ばつ：ふかふかのおふとんです。'},
+            {q:'しらすじいさんはよる、ふとんでねむりました。',a:true,exp:'まる：おふとんでねむりました。'},
+            {q:'あさまでねむらず、おんせんですごしつづけました。',a:false,exp:'ばつ：よるはぐっすりねむりました。'},
+            {q:'りょこうのいきさきとおんせんにはいったばしょは、あたみでした。',a:true,exp:'まる：あたみのおんせんりょこうです。'},
+            {q:'このりょこうはあついなつのかいすいよくがもくてきでした。',a:false,exp:'ばつ：あきのひのおんせんりょこうです。'}
+        );
+        STORIES['3'].quiz.push(
+            {q:"としょかんでさいしょにいったのは、ほんをさがすことです。",a:true,exp:"まる：いりぐちでかりたいほんをさがしました。"},            {q:"かりるまえに、まどぎわのせきでほんをよみました。",a:true,exp:"まる：せきですこしよんだあとかりました。"},            {q:"ほんをさがすよりさきに、わすれたかさをみつけました。",a:false,exp:"ばつ：かさをさがしたのはかえりぎわです。"},            {q:"あおいさんがそうだんしたひとは、としょかんのうけつけのひとです。",a:true,exp:"まる：うけつけにそうだんしています。"},            {q:"かさはいすのしたではなく、いすのよこにありました。",a:true,exp:"まる：いすのよこにあったとかかれています。"},            {q:"かさはうけつけのひとからあたらしくかったものです。",a:false,exp:"ばつ：もともともっていたあおいかさです。"},            {q:"あおいさんは、かさをみつけたことをしらせずにかえりました。",a:false,exp:"ばつ：うけつけのひとにおれいをいいました。"},            {q:"あおいさんはわすれものにきづき、そうだんしてからさがしました。",a:true,exp:"まる：そうだんのあと、せきへもどりました。"},            {q:"あめがふるまえに、あおいさんはかさをみつけていました。",a:true,exp:"まる：かさをみつけ、かえりみちであめがふりでしました。"},            {q:"あおいさんはかさをおきわすれたので、あめでぬれました。",a:false,exp:"ばつ：みつけたかさをつかい、ぬれずにかえりました。"},            {q:"あおいさんがかさをわすれたのは、としょかんへくるまえです。",a:false,exp:"ばつ：としょかんでせきをつかったあとにわすれたときづきました。"},            {q:"りょうりのほんとはなのしゃしんしゅうは、おなじひにかりました。",a:true,exp:"まる：うけつけでにさつまとめてかりました。"},            {q:"かさがひつようになったりゆうは、かえりみちにあめがふったからです。",a:true,exp:"まる：かえりみちであめがふりでしました。"},            {q:"うけつけのひとは、かさをさがすのにつきそいました。",a:true,exp:"まる：うけつけのひとといっしょにせきへもどりました。"},            {q:"おはなしは、としょかんにいき、ほんをかりて、かさをさがし、いえにかえるじゅんばんです。",a:true,exp:"まる：ほんぶんのできごとはこのじゅんばんです。"}
+        );
+
+        // 【学習記録との互換性】
+        // ここは画面表示用ではありません。旧バージョンの出題文を、
+        // 過去の学習記録と照合するための内部IDとしてのみ保持します。
+        // 利用者に表示・読み上げる文章は、上のひらがな文（q / exp）を使います。
+        // 追加・並べ替え時にはこの対応表も必ず更新してください。
+        var LEGACY_READING_QUESTION_IDS = {
+      "1": [
+            "かぼちゃおじいさんとわかめおじいさんは、海へあそびに行きました。",
+            "かぼちゃおじいさんのおにぎりの具は、赤い「うめぼし」でした。",
+            "わかめおじいさんのおにぎりの具は、「しゃけ」でした。",
+            "ふたりは、高いおかの上でおにぎりを食べました。",
+            "おにぎりは、サランラップに包まれていました。",
+            "ふたりは、森へ遠足に出かけました。",
+            "ふたりは、大きなリュックにおにぎりを詰めました。",
+            "リュックに詰めた食べ物は、サンドイッチでした。",
+            "かぼちゃおじいさんのおにぎりには、こんぶが入っていました。",
+            "うめぼしは、すっぱい味がしました。",
+            "かぼちゃおじいさんは、うめぼしを食べると元気が出ると感じました。",
+            "わかめおじいさんのおにぎりの具は、こんぶでした。",
+            "わかめおじいさんのおにぎりは、甘いチョコレート味でした。",
+            "こんぶのたれは、ごはんにしみていました。",
+            "ふたりは、低い地下室でおにぎりを食べました。",
+            "ふたりは、おかの上で風を感じました。",
+            "ふたりは、レストランの席でおにぎりを食べました。",
+            "おにぎりは、たけのこの皮から取り出しました。",
+            "おにぎりは、木の箱から取り出しました。",
+            "ふたりは、おにぎりをおいしく食べました。",
+            "遠足に出かけたのは、かぼちゃおじいさん一人だけでした。",
+            "ふたりは遠足のお弁当におにぎりを選びました。",
+            "リュックは小さかったので、おにぎりを入れられませんでした。",
+            "かぼちゃおじいさんとわかめおじいさんでは、おにぎりの具が違いました。",
+            "かぼちゃおじいさんのおにぎりの具は、甘いジャムでした。",
+            "わかめおじいさんは、こんぶのおにぎりを持っていきました。",
+            "ふたりが食べたとき、風が吹いていました。",
+            "遠足の目的地は、海辺の砂浜でした。",
+            "おにぎりを食べた場所は森の中の高いおかでした。",
+            "こんぶのたれは、ごはんにほとんどついていませんでした。",
+            "うめぼしは酸っぱく、元気が出る具として紹介されました。",
+            "ふたりは食べる前に、たけのこの皮からおにぎりを取り出しました。",
+            "こんぶのおにぎりを用意したのは、かぼちゃおじいさんでした。",
+            "ふたりはおにぎりの味に満足しました。",
+            "おにぎりを食べたとき、ふたりは屋内のレストランにいました。"
+      ],
+      "2": [
+            "しらすお爺さんが行ったのは、秋の温泉旅行である。",
+            "電車の中で食べたのは、カレーパンである。",
+            "旅館に着いて、最初にお風呂（温泉）に入った。",
+            "夕食には、ハンバーグを食べた。",
+            "夜は朝までぐっすり眠ることができた。",
+            "しらす爺さんの旅行の季節は秋でした。",
+            "旅行先は北海道の温泉でした。",
+            "しらす爺さんは熱海へ行きました。",
+            "行きの乗り物は電車でした。",
+            "しらす爺さんは電車で、しらす煎餅を食べました。",
+            "電車で食べたあんパンは、しらす爺さんの好きな食べ物でした。",
+            "旅館に着いてすぐ、まず買い物へ行きました。",
+            "旅館では、温かい温泉に入りました。",
+            "温泉では、のんびり過ごしました。",
+            "夕食には新鮮なお刺身が出ました。",
+            "夕食には、金目鯛の煮付けもありました。",
+            "しらす爺さんは夕食に満足できませんでした。",
+            "夜は、固い床の上で眠りました。",
+            "夜に眠った場所は、ふかふかのお布団でした。",
+            "しらす爺さんは、夜中ずっと起きていました。",
+            "熱海へ行ったのは秋のある日でした。",
+            "しらす爺さんは旅行で列車を使いませんでした。",
+            "電車に乗っている間に好きな食べ物を食べました。",
+            "このおはなしで電車のおやつは、しらす煎餅でした。",
+            "宿泊した旅館では、温泉に入りました。",
+            "旅館に着いた直後に、まず夕食を食べました。",
+            "しらす爺さんは、温泉でゆったり過ごしました。",
+            "夕食は刺身と金目鯛の煮付けでした。",
+            "金目鯛は煮付けではなく、必ず焼き魚でした。",
+            "夕食について、しらす爺さんは大満足でした。",
+            "旅館で眠ったのは、硬いベンチの上でした。",
+            "しらす爺さんは夜、布団で眠りました。",
+            "朝まで眠らず、温泉で過ごし続けました。",
+            "旅行の行き先と温泉に入った場所は、熱海でした。",
+            "この旅行は暑い夏の海水浴が目的でした。"
+      ],
+      "3": [
+            "あおいさんが図書館に行ったのは土曜日の午後です。",
+            "あおいさんが選んだのは料理の本と花の写真集です。",
+            "あおいさんは本を選ぶ前に、受付で二冊を借りました。",
+            "傘がないことに気づいたのは、外へ出ようとしたときです。",
+            "忘れた傘を探すとき、あおいさんは受付に相談しました。",
+            "あおいさんは朝早く図書館へ行きました。",
+            "図書館へ持って行った傘は青色でした。",
+            "料理の本と動物の写真集を選びました。",
+            "本は三冊借りました。",
+            "本を読んだ席は窓際でした。",
+            "借りる手続きをしたのは、帰る前です。",
+            "傘がないと気づいた場所は、自宅の玄関です。",
+            "忘れた傘はすぐに受付の人へ相談しました。",
+            "傘を探すとき、一人で駅まで戻りました。",
+            "傘が見つかったのは、窓際の席の椅子の横です。",
+            "傘は図書館の屋上に置いてありました。",
+            "傘が見つかったあと、あおいさんはお礼を言いました。",
+            "帰り道では晴れたままでした。",
+            "帰りの雨では、見つかった傘を使いました。",
+            "雨が降ったので、借りた本を図書館へ返しました。",
+            "図書館で最初に行ったのは、本を探すことです。",
+            "借りる前に、窓際の席で本を読みました。",
+            "本を探すより先に、忘れた傘を見つけました。",
+            "あおいさんが相談した人は、図書館の受付の人です。",
+            "傘は椅子の下ではなく、椅子の横にありました。",
+            "傘は受付の人から新しく買ったものです。",
+            "あおいさんは、傘を見つけたことを知らせずに帰りました。",
+            "あおいさんは忘れ物に気づき、相談してから探しました。",
+            "雨が降る前に、あおいさんは傘を見つけていました。",
+            "あおいさんは傘を置き忘れたので、雨でぬれました。",
+            "あおいさんが傘を忘れたのは、図書館へ来る前です。",
+            "料理の本と花の写真集は、同じ日に借りました。",
+            "傘が必要になった理由は、帰り道に雨が降ったからです。",
+            "受付の人は、傘を探すのに付き添いました。",
+            "話の順番は、図書館に行く→本を借りる→傘を探す→帰る、です。"
+      ]
+};
+        Object.keys(LEGACY_READING_QUESTION_IDS).forEach(function(storyId) {
+            STORIES[storyId].quiz.forEach(function(q, i) {
+                q.recordIdText = LEGACY_READING_QUESTION_IDS[storyId][i] || q.q;
+            });
+        });
+
+        Object.keys(STORIES).forEach(function (storyId) {
+            STORIES[storyId].quiz.forEach(function (q,i) {
+                q.difficultyLevel = Math.min(10,Math.floor(i / Math.max(1,STORIES[storyId].quiz.length / 10)) + 1);
+            });
+        });
+
+        var currentStory = STORIES[STORY_ID] || STORIES["1"];
+        var readingActivityId = 'readingMemory' + (['1','2','3'].indexOf(STORY_ID)>=0?STORY_ID:'1');
+        function selectRandomStoryQuestions(allQuestions, count) {
+            var selectedLevel = window.KotobaLevels ? window.KotobaLevels.get(readingActivityId).selected : 1;
+            var pool = window.KotobaLevels ? window.KotobaLevels.pool(allQuestions,selectedLevel) : allQuestions.slice();
+            for (var i = pool.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = pool[i]; pool[i] = pool[j]; pool[j] = temp;
+            }
+            return pool.slice(0, count);
+        }
+        var quizData = selectRandomStoryQuestions(currentStory.quiz, 5);
+        var currentQuestionIndex = 0;
+        var score = 0;
+        var answered = false;
+        var quizHistory = [];
+        var quizStartedAt = null;
+        var quizLearningStarted = false;
+        var quizResultSaved = false;
+        var speechQueue = [];
+        var speechGeneration = 0;
+
+        function stopSpeech(){
+            speechGeneration++;
+            speechQueue = [];
+            // 音声読み上げ(TTS)と音声認識を別々に停止します。
+            try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch(e){}
+            try { if (window.AndroidSpeech && typeof window.AndroidSpeech.stopTts === 'function') window.AndroidSpeech.stopTts(); } catch(e){}
+            var status = document.getElementById('voice-status');
+            if (status) status.textContent = '';
+        }
+
+        // 「ぜんぶ よむ」用に、現在のお話の各段落から本文を作ります。
+        // 以前は未定義の storyTextFull を参照していたため、押しても再生されませんでした。
+        function readAllStory(){
+            var fullText = (currentStory && Array.isArray(currentStory.story) ? currentStory.story : [])
+                .map(function(paragraph){
+                    return String(paragraph || '').replace(/\s+/g, ' ').trim().replace(/[。！？]+$/g, '');
+                })
+                .filter(function(paragraph){ return paragraph.length > 0; })
+                .join('。 ');
+            if (fullText) speakText(fullText + '。');
+        }
+
+        // 長文を小さな文節に分割。Chrome等で長い一つのUtteranceが停止する問題を避けます。
+        function splitSpeech(text){
+            var sentences=String(text).match(/[^。！？!?、，,]+[。！？!?、，,]?/g)||[String(text)];
+            var parts=[],buffer='';
+            sentences.forEach(function(s){
+                while(s.length>110){
+                    if(buffer){parts.push(buffer);buffer='';}
+                    parts.push(s.slice(0,110));s=s.slice(110);
+                }
+                if(buffer.length+s.length>110){parts.push(buffer);buffer='';}
+                buffer+=s;
+            });
+            if(buffer)parts.push(buffer);
+            return parts.filter(Boolean);
+        }
+        function readSpeechChunk(gen){
+            if(gen!==speechGeneration)return;
+            var status=document.getElementById('voice-status');
+            if(!speechQueue.length){if(status)status.textContent='よみあげが おわりました。';return;}
+            var sentence=speechQueue.shift();
+            try{
+                var u=new SpeechSynthesisUtterance(sentence);
+                u.lang='ja-JP';u.rate=.85 * (window.KotobaSharedSFX?window.KotobaSharedSFX.voiceRate():1);u.pitch=1;u.volume=window.KotobaSharedSFX?window.KotobaSharedSFX.voiceLevel():.6;
+                var voices=window.speechSynthesis.getVoices();
+                var jaVoice=voices.find(function(v){return /^ja[-_]/i.test(v.lang);});
+                if(jaVoice)u.voice=jaVoice;
+                u.onstart=function(){if(gen===speechGeneration&&status)status.textContent='🔊 よみあげています…';};
+                u.onend=function(){if(gen===speechGeneration)setTimeout(function(){readSpeechChunk(gen);},70);};
+                u.onerror=function(event){
+                    if(gen!==speechGeneration)return;
+                    speechQueue=[];
+                    if(status)status.textContent='よみあげを とめました。おんりょうや おんせいの せっていを かくにんし、もういちど おしてください。';
+                };
+                if(window.speechSynthesis.paused)window.speechSynthesis.resume();
+                window.speechSynthesis.speak(u);
+            }catch(e){if(status)status.textContent='おんせいを さいせいできません。おんせいの せっていを かくにんしてください。';}
+        }
+        function speakText(text){
+            var cleanText=String(text||'').replace(/\s+/g,' ').trim();
+            if(!cleanText)return;
+            if(window.KotobaSharedSFX && window.KotobaSharedSFX.voiceLevel()<=0){stopSpeech();var muted=document.getElementById('voice-status');if(muted)muted.textContent='よみあげは せっていで おふになっています。';return;}
+            stopSpeech();
+            var gen=speechGeneration;
+            var status=document.getElementById('voice-status');
+            if(window.AndroidSpeech&&typeof window.AndroidSpeech.speak==='function'){
+                try{window.AndroidSpeech.speak(cleanText);if(status)status.textContent='よみあげています…';return;}catch(e){}
+            }
+            if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined'){
+                if(status)status.textContent='この ぶらうざーでは よみあげを つかえません。';
+                return;
+            }
+            speechQueue=splitSpeech(cleanText);
+            if(status)status.textContent='おんせいを じゅんびしています…';
+            readSpeechChunk(gen);
+        }
+
+        function switchTab(tab){
+            stopSpeech();
+            var storySec=document.getElementById('story-section'), quizSec=document.getElementById('quiz-section'), resultSec=document.getElementById('result-section');
+            var storyBtn=document.getElementById('tab-story-btn'), quizBtn=document.getElementById('tab-quiz-btn');
+            if(tab==='story'){
+                storySec.classList.remove('hidden'); quizSec.classList.add('hidden'); resultSec.classList.add('hidden');
+                storyBtn.className='px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-600 bg-amber-500 text-white shadow-md btn-active';
+                quizBtn.className='px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-300 bg-white text-amber-800 shadow-md btn-active';
+            }else{
+                storySec.classList.add('hidden'); quizSec.classList.remove('hidden'); resultSec.classList.add('hidden');
+                quizBtn.className='px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-600 bg-amber-500 text-white shadow-md btn-active';
+                storyBtn.className='px-4 py-2 text-lg sm:text-xl font-bold rounded-xl border-2 border-amber-300 bg-white text-amber-800 shadow-md btn-active';
+                loadQuestion();
+            }
+        }
+
+        // R15 PC 表示専用。読み上げは元のひらがな文をそのまま使う。
+        // 問題・正答・記録キーは変えない。かな→漢字の変換は読みやすい語だけに限定する。
+        var readingKanjiPairs = [
+            ["はなのしゃしんしゅう","花の写真集"],
+            ["あおいおりたたみがさ","青い折りたたみ傘"],
+            ["きんめだいのにつけ","金目鯛の煮付け"],
+            ["かぼちゃおじいさん","かぼちゃおじいさん"],
+            ["わかめおじいさん","わかめおじいさん"],
+            ["おんせんりょこう","温泉旅行"],
+            ["りょうりのほ ん","料理の本"],
+            ["しらすじいさん","しらすじいさん"],
+            ["おりたたみがさ","折りたたみ傘"],
+            ["りょうりのほん","料理の本"],
+            ["しゃしんしゅう","写真集"],
+            ["うけつけのひと","受付の人"],
+            ["まどぎわのせき","窓際の席"],
+            ["たけのこのかわ","竹の子の皮"],
+            ["しらすせんべい","しらすせんべい"],
+            ["いきのでんしゃ","行きの電車"],
+            ["かいすいよく","海水浴"],
+            ["ちょこれーと","チョコレート"],
+            ["さがしました","探しました"],
+            ["つかいました","使いました"],
+            ["かえりました","帰りました"],
+            ["ねむりました","眠りました"],
+            ["はいりました","入りました"],
+            ["すごしました","過ごしました"],
+            ["としょかん","図書館"],
+            ["わすれもの","忘れ物"],
+            ["もりのなか","森の中"],
+            ["しんせんな","新鮮な"],
+            ["ゆうしょく","夕食"],
+            ["かえりみち","帰り道"],
+            ["あおいかさ","青い傘"],
+            ["あおいさん","あおいさん"],
+            ["こうばしい","香ばしい"],
+            ["たかいおか","高い丘"],
+            ["おかのうえ","丘の上"],
+            ["かりました","借りました"],
+            ["よみました","読みました"],
+            ["じゅんばん","順番"],
+            ["しゅっぱつ","出発"],
+            ["おべんとう","お弁当"],
+            ["たべました","食べました"],
+            ["れすとらん","レストラン"],
+            ["もっていき","持って行き"],
+            ["みつかった","見つかった"],
+            ["いきました","行きました"],
+            ["つきました","着きました"],
+            ["ふりました","降りました"],
+            ["ぬれました","濡れました"],
+            ["やきざかな","焼き魚"],
+            ["うめぼし","梅干し"],
+            ["おにぎり","おにぎり"],
+            ["あんぱん","あんぱん"],
+            ["りゅっく","リュック"],
+            ["りょかん","旅館"],
+            ["おんせん","温泉"],
+            ["でんしゃ","電車"],
+            ["うけつけ","受付"],
+            ["おふとん","お布団"],
+            ["まんぞく","満足"],
+            ["あさまで","朝まで"],
+            ["どようび","土曜日"],
+            ["あきのひ","秋の日"],
+            ["いりぐち","入口"],
+            ["えんそく","遠足"],
+            ["ふかふか","ふかふか"],
+            ["かいもの","買い物"],
+            ["かりたい","借りたい"],
+            ["おおきな","大きな"],
+            ["ちいさな","小さな"],
+            ["いっしょ","一緒"],
+            ["さんさつ","3冊"],
+            ["いきさき","行き先"],
+            ["たべもの","食べ物"],
+            ["おいしく","おいしく"],
+            ["さがした","探した"],
+            ["そうだん","相談"],
+            ["きづいた","気づいた"],
+            ["もどった","戻った"],
+            ["げんかん","玄関"],
+            ["ちょくご","直後"],
+            ["さいしょ","最初"],
+            ["ゆうがた","夕方"],
+            ["ねました","寝ました"],
+            ["でました","出ました"],
+            ["はいった","入った"],
+            ["こんかい","今回"],
+            ["りょこう","旅行"],
+            ["こんぶ","昆布"],
+            ["あたみ","熱海"],
+            ["ふたり","二人"],
+            ["しりつ","市立"],
+            ["かりる","借りる"],
+            ["かりた","借りた"],
+            ["よんだ","読んだ"],
+            ["せきで","席で"],
+            ["ひとり","一人"],
+            ["にさつ","2冊"],
+            ["りゆう","理由"],
+            ["きせつ","季節"],
+            ["たべた","食べた"],
+            ["たべる","食べる"],
+            ["さがす","探す"],
+            ["さがし","探し"],
+            ["きづき","気づき"],
+            ["もって","持って"],
+            ["もどり","戻り"],
+            ["もどる","戻る"],
+            ["みつけ","見つけ"],
+            ["でかけ","出かけ"],
+            ["だして","出して"],
+            ["おれい","お礼"],
+            ["つかい","使い"],
+            ["じたく","自宅"],
+            ["かえる","帰る"],
+            ["かえり","帰り"],
+            ["じゅん","順"],
+            ["はじめ","初め"],
+            ["こたえ","答え"],
+            ["ねむる","眠る"],
+            ["いった","行った"],
+            ["はいる","入る"],
+            ["ついた","着いた"],
+            ["ぬれず","濡れず"],
+            ["すこし","少し"],
+            ["くるま","車"],
+            ["たのし","楽し"],
+            ["おぼえ","覚え"],
+            ["ごご","午後"],
+            ["あき","秋"],
+            ["いす","椅子"],
+            ["さつ","冊"],
+            ["あめ","雨"],
+            ["かさ","傘"],
+            ["よみ","読み"],
+            ["ほん","本"],
+            ["もり","森"],
+            ["うみ","海"],
+            ["おか","丘"],
+            ["かぜ","風"],
+            ["せき","席"],
+            ["たべ","食べ"],
+            ["きづ","気づ"],
+            ["いえ","家"],
+            ["ひる","昼"],
+            ["よる","夜"],
+            ["ねむ","眠"],
+            ["ふり","降り"],
+            ["ふる","降る"],
+            ["そと","外"],
+            ["はれ","晴れ"],
+            ["とき","時"],
+        ];
+        function displayReadingText(value){
+            var text=String(value||'');
+            readingKanjiPairs.forEach(function(entry){text=text.split(entry[0]).join(entry[1]);});
+            return text;
+        }
+
+        function renderStory(){
+            document.getElementById('story-page-title').textContent = currentStory.title;
+            document.getElementById('story-title-label').textContent = currentStory.title;
+            var body=document.getElementById('story-body'); body.innerHTML='';
+            currentStory.story.forEach(function(t,i){
+                var d=document.createElement('div'); d.className='p-3 rounded-xl hover:bg-amber-50 transition-colors';
+                d.textContent=displayReadingText(t); body.appendChild(d);
+                if(i<currentStory.story.length-1){ var hr=document.createElement('hr'); hr.className='border-t-2 border-dashed border-amber-100'; body.appendChild(hr); }
+            });
+            var review=document.getElementById('story-review'); review.innerHTML='';
+            currentStory.review.forEach(function(t){ var p=document.createElement('p'); p.textContent=displayReadingText(t); review.appendChild(p); });
+        }
+
+        function resetQuizScroll(){
+            if(document.activeElement && typeof document.activeElement.blur==='function') try{document.activeElement.blur();}catch(e){}
+            var root=document.documentElement, body=document.body;
+            var old=root.style.scrollBehavior;
+            root.style.scrollBehavior='auto';
+            try{window.scrollTo({top:0,left:0,behavior:'instant'});}catch(e){try{window.scrollTo(0,0);}catch(ignored){}}
+            root.scrollTop=0; if(body) body.scrollTop=0;
+            root.style.scrollBehavior=old;
+        }
+
+        function loadQuestion(){
+            if(currentQuestionIndex<0) currentQuestionIndex=0;
+            if(currentQuestionIndex>=quizData.length){ showResults(); return; }
+            if(!quizLearningStarted && currentQuestionIndex===0){
+                quizLearningStarted=true;
+                quizStartedAt=Date.now();
+                if(window.KotobaUnifiedLearning) window.KotobaUnifiedLearning.begin('genres','朗読・記憶トレーニング',readingActivityId);
+            }
+            answered=false;
+            var q=quizData[currentQuestionIndex];
+            document.getElementById('current-q-num').innerText=currentQuestionIndex+1;
+            document.getElementById('q-number-label').innerText=currentQuestionIndex+1;
+            document.getElementById('quiz-question').innerText=displayReadingText(q.q);
+            document.getElementById('progress-bar').style.width=((currentQuestionIndex+1)/quizData.length*100)+'%';
+            document.getElementById('options-container').classList.remove('hidden');
+            document.getElementById('readingSkipBtn').classList.remove('hidden');
+            document.getElementById('feedback-area').classList.add('hidden');
+            document.getElementById('next-btn').disabled=false;
+            document.getElementById('next-btn').classList.remove('opacity-50','pointer-events-none');
+            resetQuizScroll();
+            speakText('もんだい '+(currentQuestionIndex+1)+'。'+q.q);
+        }
+
+        function handleAnswer(userAnswer){
+            if(answered) return;
+            if(currentQuestionIndex<0 || currentQuestionIndex>=quizData.length) return;
+            answered=true;
+            stopSpeech();
+            var currentQ=quizData[currentQuestionIndex];
+            var isCorrect=(userAnswer===currentQ.a);
+            if(isCorrect) score++;
+            if(window.KotobaUnifiedLearning) window.KotobaUnifiedLearning.recordAnswer('genres',{
+                id:'reading-memory-'+STORY_ID+'-'+String(currentQ.recordIdText||currentQ.q||''),
+                prompt:currentQ.q, answer:String(currentQ.a), choices:['〇','×'],
+                difficultyLevel:currentQ.difficultyLevel || 1
+            },isCorrect);
+            quizHistory.push({index:currentQuestionIndex+1, q:currentQ.q, user:userAnswer?'〇（ただしい）':'✕（ちがう）', correct:currentQ.a?'〇（ただしい）':'✕（ちがう）', isCorrect:isCorrect, exp:currentQ.exp});
+            document.getElementById('options-container').classList.add('hidden');
+            document.getElementById('readingSkipBtn').classList.add('hidden');
+            var feedbackArea=document.getElementById('feedback-area');
+            document.getElementById('feedback-icon').innerHTML=isCorrect?'✓':'✕';
+            document.getElementById('feedback-title').innerText=isCorrect?'せいかい！':'ざんねん...';
+            document.getElementById('feedback-explanation').innerText=displayReadingText(currentQ.exp);
+            feedbackArea.className='p-6 rounded-2xl border-4 pop-in space-y-4 '+(isCorrect?'bg-emerald-50 border-emerald-400 text-emerald-900':'bg-rose-50 border-rose-400 text-rose-900');
+            feedbackArea.classList.remove('hidden');
+            document.getElementById('next-btn').disabled=false;
+            playSound(isCorrect);
+            speakText(isCorrect?'せいかいです。できました。'+currentQ.exp:'ざんねんです。'+currentQ.exp);
+        }
+
+        function skipReadingQuestion(){
+            if(answered || currentQuestionIndex<0 || currentQuestionIndex>=quizData.length) return;
+            var q=quizData[currentQuestionIndex];
+            answered=true;
+            stopSpeech();
+            quizHistory.push({index:currentQuestionIndex+1,q:q.q,user:'スキップ',correct:q.a?'〇（ただしい）':'✕（ちがう）',isCorrect:null,skipped:true,exp:q.exp});
+            currentQuestionIndex++;
+            if(currentQuestionIndex<quizData.length) loadQuestion(); else showResults();
+        }
+        function nextQuestion(){
+            if(!answered) return;
+            if(currentQuestionIndex>=quizData.length) return;
+            stopSpeech();
+            currentQuestionIndex++;
+            if(currentQuestionIndex<quizData.length) loadQuestion(); else showResults();
+        }
+
+        function showResults(){
+            if(quizResultSaved) return;
+            quizResultSaved=true;
+            stopSpeech();
+            document.getElementById('quiz-section').classList.add('hidden');
+            var resultSection=document.getElementById('result-section');
+            resultSection.classList.remove('hidden');
+            var recordsButton=document.getElementById('training-records-btn');
+            if(recordsButton){recordsButton.classList.remove('hidden');recordsButton.hidden=false;recordsButton.style.setProperty('display','flex','important');recordsButton.style.setProperty('visibility','visible','important');recordsButton.style.setProperty('opacity','1','important');}
+            document.getElementById('score-display').innerText=score;
+            var readingAnswered=quizHistory.filter(function(a){return !a.skipped;}).length;
+            var readingSkipped=quizHistory.filter(function(a){return a.skipped;}).length;
+            document.getElementById('result-total').innerText=readingAnswered;
+
+            var comment=document.getElementById('score-comment');
+            if(!readingAnswered) comment.innerText='ぜんもん すきっぷしました。せいとうりつは はかりません。';
+            else if(readingSkipped) comment.innerText='こたえた '+readingAnswered+'もんのうち '+score+'もん せいかい。すきっぷ '+readingSkipped+'もん。';
+            else if(score===quizData.length) comment.innerText='すばらしい！ ぜんもん せいかいです！ おはなしを しっかり おぼえていましたね。';
+            else if(score>=3) comment.innerText='とても よく できました！ もういちど おはなしを よめば、さらに おぼえられます。';
+            else comment.innerText='がんばりましたね！ もういちど おはなしを よんで、また ちゃれんじしてみましょう。';
+            if (readingAnswered > 0 && window.KotobaDailyStreak) window.KotobaDailyStreak.finish('readingDailyStreak');
+            var rr=document.getElementById('result-review'); rr.innerHTML='<h3 class="text-xl font-black text-amber-900">ふりかえり</h3>';
+            quizHistory.forEach(function(item){
+                var d=document.createElement('div');
+                d.className='p-3 rounded-xl border '+(item.skipped?'border-gray-200 bg-gray-50':item.isCorrect?'border-emerald-200 bg-emerald-50':'border-rose-200 bg-rose-50');
+                d.innerHTML='<div class="font-black">だい'+item.index+'もん　'+(item.skipped?'すきっぷ':item.isCorrect?'せいかい':'ふせいかい')+'</div><div class="mt-1 font-bold">'+escapeHtml(displayReadingText(item.q))+'</div><div class="mt-1 text-sm">あなた：'+escapeHtml(item.user)+'／こたえ：'+escapeHtml(item.correct)+'</div><div class="mt-1 text-sm">'+escapeHtml(displayReadingText(item.exp))+'</div>';
+                rr.appendChild(d);
+            });
+            var adaptiveSummary=null;
+            if(window.KotobaUnifiedLearning && quizLearningStarted && readingAnswered > 0) adaptiveSummary=window.KotobaUnifiedLearning.finish('genres',{
+                genre:'朗読・記憶トレーニング', activity:readingActivityId,
+                score:score,total:readingAnswered
+            });
+            try{
+                var key='aphasiaTrainingRecordsV4'; var records=JSON.parse(localStorage.getItem(key)||'[]');
+                if(!Array.isArray(records)) records=[];
+                var end=new Date(),start=new Date(quizStartedAt||end.getTime());
+                var profile=window.KotobaQuestUserProfile?window.KotobaQuestUserProfile.getCurrent():{};
+                var levels=window.KotobaLevels && readingAnswered>0 ?window.KotobaLevels.finish(readingActivityId,Math.round(score/readingAnswered*100),true,readingAnswered):null;
+                var entry={id:String(end.getTime())+'-'+Math.random().toString(36).slice(2,8),date:end.getFullYear()+'-'+String(end.getMonth()+1).padStart(2,'0')+'-'+String(end.getDate()).padStart(2,'0'),time:end.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'}),startedAt:start.toISOString(),finishedAt:end.toISOString(),durationSec:Math.max(0,Math.round((end-start)/1000)),category:'朗読・想起クイズ',genre:'認知・理解トレーニング',activity:currentStory.title,score:score,total:readingAnswered,presented:quizData.length,skipped:readingSkipped,rate:readingAnswered?Math.round(score/readingAnswered*100):null,kind:'training',turns:0,activityId:readingActivityId,difficultyLevel:levels?levels.level:1,masteryBefore:levels?levels.before:0,masteryAfter:levels?levels.points:0,userProfileId:profile.profileId||'unconfigured',userName:profile.displayName||'名前未登録',userCode:profile.recordCode||''};
+                entry.questionResults=quizHistory.map(function(a){return {number:a.index,question:a.q,answer:a.correct,given:a.user,correct:a.skipped?null:a.isCorrect,status:a.skipped?'スキップ':a.isCorrect?'正解':'不正解'};});
+                if(adaptiveSummary) entry.adaptive=adaptiveSummary;
+                records.push(entry);localStorage.setItem(key,JSON.stringify(records));
+            }catch(e){console.warn('朗読・想起クイズの記録を保存できませんでした。',e);}
+            speakText('おつかれさまでした。'+quizData.length+'もん ちゅう '+score+'もん せいかいです。');
+            // 結果の先頭へ移動し、緑色の記録ボタンが見える位置から表示します。
+            resetQuizScroll();
+            setTimeout(resetQuizScroll, 80);
+        }
+
+        function restartQuiz(){ currentQuestionIndex=0; score=0; quizHistory=[]; quizStartedAt=null; quizLearningStarted=false; quizResultSaved=false; switchTab('quiz'); }
+        function speakCurrentQuestion(){ if(currentQuestionIndex<quizData.length) speakText('もんだい '+(currentQuestionIndex+1)+'。'+quizData[currentQuestionIndex].q); }
+        function escapeHtml(s){ return String(s||'').replace(/[&<>\"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+        function playSound(isCorrect){
+            // 共有音量設定を守り、音声読み上げをかき消さない短い音を使う。
+            if(window.KotobaSharedSFX)window.KotobaSharedSFX.play(isCorrect?'correct':'wrong');
+        }
+
+        function returnToKotobaQuest(){
+            stopSpeech();
+            try{ if(window.AndroidApp && typeof window.AndroidApp.returnToMain==='function'){ window.AndroidApp.returnToMain(); return; } }catch(e){}
+            try{  window.location.replace('index.html?v=86#title'); }catch(e){ window.location.href='index.html?v=86#title'; }
+        }
+
+        function openTrainingRecords(){
+            stopSpeech();
+            try{ if(window.AndroidApp && typeof window.AndroidApp.openRecords==='function'){ window.AndroidApp.openRecords(); return; } }catch(e){}
+            try{  window.location.replace('index.html?v=86#records'); }catch(e){ window.location.href='index.html?v=86#records'; }
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            renderStory();
+            // 初期表示は必ず「おはなし」から。課題を切り替えても問題番号が残らない。
+            currentQuestionIndex=0; score=0; quizHistory=[];
+            switchTab('story');
+        });
+
+        window.addEventListener('pagehide', stopSpeech);
+        window.addEventListener('beforeunload', stopSpeech);
+        document.addEventListener('visibilitychange', function(){ if(document.hidden) stopSpeech(); });
+        window.__readingMemoryStandalone=true;
+</script>
+</body>
+</html>
