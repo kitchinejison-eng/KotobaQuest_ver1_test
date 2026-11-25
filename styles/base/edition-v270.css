@@ -1,0 +1,10 @@
+/* Ver2.7.0: edition-specific presentation; shared training and data remain unchanged. */
+#titleScreen .title-name{white-space:normal;overflow-wrap:anywhere}
+#titleScreen .title-dev-badge{display:block;font-size:13px;line-height:1.5;letter-spacing:0;color:#426582;text-shadow:none;margin-top:5px}
+#game .quiz-card,#settings .settings-panel,.category-card,.activity-card,#answerArea{min-width:0;max-width:100%}
+#game .screen-head-title{overflow-wrap:anywhere}
+@media(min-width:1025px){
+html:not(.kq-pc-mobile-view):not(.kq-pc-tablet-view) #home .category-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1120px}
+html:not(.kq-pc-mobile-view):not(.kq-pc-tablet-view) .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+html:not(.kq-pc-mobile-view):not(.kq-pc-tablet-view) #game .quiz-card{max-width:1000px;margin-inline:auto}
+}

@@ -1,0 +1,31 @@
+/* Ver2.5.7 Qwen生成AIテスト画面：視認性を優先 */
+.kq-qwen-panel{margin:12px 0 18px;padding:16px;border:2px solid #b3cfdf;border-radius:16px;background:#f4fbff;color:#173a55;line-height:1.65}
+.kq-qwen-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-bottom:8px}
+.kq-qwen-head strong{font-size:clamp(16px,3.6vw,19px)}
+.kq-qwen-mode{display:inline-block;padding:4px 10px;border-radius:999px;background:#e2ebef;color:#17485d;font-weight:800;font-size:13px}
+.kq-qwen-panel[data-mode="ready"]{border-color:#72ad91;background:#f2fff8}
+.kq-qwen-panel[data-mode="ready"] .kq-qwen-mode{background:#d5f3e3;color:#16543a}
+.kq-qwen-explain{margin:5px 0 10px;font-size:14px}
+.kq-qwen-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.kq-qwen-actions button{min-height:48px;flex:1 1 170px;font:inherit;font-weight:800;border:2px solid #27749b;border-radius:12px;background:#12769e;color:white;cursor:pointer;padding:9px 12px}
+.kq-qwen-actions button.kq-qwen-local{background:white;color:#1e5872}
+.kq-qwen-actions button:disabled{opacity:.55;cursor:wait}
+.kq-qwen-progress{width:100%;height:14px;accent-color:#1381ad;display:block;margin:8px 0}
+.kq-qwen-progress[hidden]{display:none}
+.kq-qwen-progress-text{font-size:14px;overflow-wrap:anywhere;margin:5px 0}
+.kq-qwen-notice{display:block;white-space:pre-wrap;padding:10px 12px;border-radius:10px;border:2px solid #d6b87b;background:#fff9e9;color:#654b21;font-size:14px;font-weight:800;margin-top:8px}
+.kq-qwen-notice[hidden]{display:none}
+.kq-qwen-notice[data-kind="error"]{background:#fff4eb;border-color:#d8a080;color:#743a20}
+.kq-qwen-panel button:focus-visible{outline:3px solid #e7a832;outline-offset:2px}
+@media(max-width:480px){.kq-qwen-panel{padding:12px}.kq-qwen-actions{display:grid;grid-template-columns:1fr}}
+
+/* Ver2.6.2: 自由会話の音声操作 */
+.kq-free-input-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.kq-free-input-actions button{min-height:54px;white-space:normal;overflow-wrap:anywhere}
+#aiMicBtn[aria-pressed="true"]{background:#a52b3d!important;color:#fff!important;border-color:#a52b3d!important}
+.kq-free-tts-controls{margin:14px 0;padding:12px;border:1px solid currentColor;border-radius:12px}
+.kq-free-auto-label{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:700;cursor:pointer}
+.kq-free-auto-label input{width:24px;height:24px;flex:none;accent-color:#1976d2}
+.kq-free-voice-note{font-size:14px;line-height:1.55;margin:6px 0;overflow-wrap:anywhere}
+#kqFreeSpeechStatus:empty{display:none}
+@media(max-width:480px){.kq-free-input-actions{grid-template-columns:1fr!important}}

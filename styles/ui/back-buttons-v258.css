@@ -1,0 +1,20 @@
+/* Ver2.5.8: 「←」だけの戻る操作を文字で説明。スマホでも押しやすい領域を確保。 */
+#communityBackBtn.kq-v258-back,#homeBtn.kq-v258-back,#recordsHomeBtn.kq-v258-back{
+ width:auto!important;min-width:92px!important;min-height:48px!important;padding:8px 12px!important;
+ display:inline-flex!important;align-items:center;justify-content:center;gap:5px;
+ font-size:clamp(13px,3.5vw,16px)!important;font-weight:850;white-space:nowrap;
+}
+#game .screen-head {grid-template-columns:minmax(92px,auto) minmax(0,1fr) auto;}
+#records .screen-head,#communityBoard .screen-head {grid-template-columns:minmax(92px,auto) minmax(0,1fr) auto;}
+#game .head-status {flex-wrap:wrap;justify-content:flex-end;}
+#game .screen-head-title,#records .screen-head-title,#communityBoard .screen-head-title {min-width:0;white-space:normal;overflow-wrap:anywhere;}
+@media (max-width:500px){
+ #game .screen-head {grid-template-columns:minmax(92px,auto) minmax(0,1fr);grid-template-areas:'back title' 'status status';}
+ #game #homeBtn {grid-area:back;}
+ #game #trainingTitle {grid-area:title;text-align:center;}
+ #game .head-status {grid-area:status;justify-content:center;}
+ #communityBoard .screen-head,#records .screen-head {gap:5px;}
+}
+/* PC上のモバイル表示モードもヘッダーを2行にして文字の重なりを防止。 */
+html.kq-pc-mobile-view #game .screen-head {grid-template-columns:minmax(92px,auto) minmax(0,1fr)!important;grid-template-areas:'back title' 'status status';}
+html.kq-pc-mobile-view #communityBoard .screen-head,html.kq-pc-mobile-view #records .screen-head {grid-template-columns:minmax(92px,auto) minmax(0,1fr) auto!important;}
