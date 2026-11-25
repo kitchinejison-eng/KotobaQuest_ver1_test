@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "appVersion": "2.7.0",
+  "platform": "pc-browser",
+  "runtimeApi": "window.KotobaQuestMakerBridge",
+  "snapshotMethod": "snapshot()",
+  "exportMethod": "exportFile()",
+  "snapshotFile": "maker-runtime-banks.json",
+  "overridesJson": "maker-final-banks.json",
+  "overridesScript": "maker-final-banks.js",
+  "overrideKeyPattern": "question-data/<activityId>/lvNN.js",
+  "cueImageField": "image",
+  "cueImageDisableValue": false,
+  "cueHintsField": "cues",
+  "listenTextField": "makerListenText",
+  "makerV22FullBankVerified": false,
+  "edition": "pc"
+}

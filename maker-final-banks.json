@@ -1,0 +1,227 @@
+{
+  "question-data/fill/lv01.js": [
+    {
+      "question": "文の続きを選びましょう。",
+      "answer": "たべます",
+      "image": "",
+      "prompt": "ごはんを（　　）。",
+      "hint": "口に入れて食べる動作です。",
+      "choices": [
+        "たべます",
+        "のみます",
+        "ねます",
+        "みます"
+      ],
+      "difficultyLevel": 1
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "朝、会った人に「（　）ございます」とあいさつします。",
+      "answer": "おはよう",
+      "choices": [
+        "おはよう",
+        "こんばんは",
+        "さようなら",
+        "おやすみ"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 1
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "食事の前に「（　）ます」と言います。",
+      "answer": "いただき",
+      "choices": [
+        "いただき",
+        "おやすみ",
+        "さようなら",
+        "ただいま"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 1
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "食事の後に「ごちそう（　）」と言います。",
+      "answer": "さまでした",
+      "choices": [
+        "さまでした",
+        "ください",
+        "ございます",
+        "しましょう"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 1
+    },
+    {
+      "question": "文の空いているところに入る言葉を選びましょう。",
+      "prompt": "人が暮らす建物は（　）です。",
+      "answer": "いえ",
+      "choices": [
+        "いえ",
+        "みかん",
+        "つくえ",
+        "てがみ"
+      ],
+      "hint": "文の前後の意味を考えましょう。最初の音は「い」です。",
+      "explanation": "空欄に「いえ」を入れると、意味が通ります。例：「家に帰ります。」。「いえ」は人が暮らす建物を表します。",
+      "difficultyLevel": 1,
+      "expansionVersion": "veta11",
+      "practiceVariant": 1
+    }
+  ],
+  "question-data/fill/lv03.js": [
+    {
+      "question": "文の続きを選びましょう。",
+      "answer": "はいります",
+      "image": "",
+      "prompt": "おふろに（　　）。",
+      "hint": "お風呂の中に入ることです。",
+      "choices": [
+        "はいります",
+        "かいます",
+        "よみます",
+        "かきます"
+      ],
+      "difficultyLevel": 3
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "本を読む場所として（　）があります。",
+      "answer": "図書館",
+      "choices": [
+        "図書館",
+        "駐車場",
+        "浴室",
+        "台所"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 3
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "友だちが助けてくれたので「（　）」と伝えます。",
+      "answer": "ありがとう",
+      "choices": [
+        "ありがとう",
+        "おやすみ",
+        "いただきます",
+        "いってきます"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 3
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "店員さんに「これは（　）ですか」と値段を尋ねます。",
+      "answer": "いくら",
+      "choices": [
+        "いくら",
+        "どちら",
+        "いつ",
+        "だれ"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 3
+    },
+    {
+      "question": "文の続きを選びましょう。",
+      "prompt": "相手の声が聞き取れないときは「もう（　）お願いします」と伝えます。",
+      "answer": "一度",
+      "choices": [
+        "一度",
+        "明日",
+        "少し",
+        "半分"
+      ],
+      "hint": "文章の前と後を読んで、自然につながる言葉を考えましょう。",
+      "expansionVersion": "veta10",
+      "difficultyLevel": 3
+    }
+  ],
+  "question-data/fill/lv06.js": [
+    {
+      "question": "数字を順番に言ってみましょう。",
+      "image": "",
+      "answer": "1・2・3",
+      "prompt": "1 → 2 → ？",
+      "hint": "次の数字です。",
+      "choices": [
+        "1・2・3",
+        "3・2・1",
+        "1・3・2"
+      ],
+      "difficultyLevel": 6
+    },
+    {
+      "question": "文の空いているところに入る言葉を選びましょう。",
+      "prompt": "手紙や荷物を出す場所は（　）です。",
+      "answer": "ゆうびんきょく",
+      "choices": [
+        "ゆうびんきょく",
+        "おさら",
+        "じてんしゃ",
+        "かいさつぐち"
+      ],
+      "hint": "文の前後の意味を考えましょう。最初の音は「ゆ」です。",
+      "explanation": "空欄に「ゆうびんきょく」を入れると、意味が通ります。例：「郵便局で切手を買います。」。「ゆうびんきょく」は手紙や荷物を出す場所を表します。",
+      "difficultyLevel": 6,
+      "expansionVersion": "veta11",
+      "practiceVariant": 26
+    },
+    {
+      "question": "文の空いているところに入る言葉を選びましょう。",
+      "prompt": "本を読んだり借りたりする施設は（　）です。",
+      "answer": "としょかん",
+      "choices": [
+        "としょかん",
+        "せっけん",
+        "おふろ",
+        "ほうき"
+      ],
+      "hint": "文の前後の意味を考えましょう。最初の音は「と」です。",
+      "explanation": "空欄に「としょかん」を入れると、意味が通ります。例：「図書館で本を借ります。」。「としょかん」は本を読んだり借りたりする施設を表します。",
+      "difficultyLevel": 6,
+      "expansionVersion": "veta11",
+      "practiceVariant": 27
+    },
+    {
+      "question": "文の空いているところに入る言葉を選びましょう。",
+      "prompt": "食材を冷やして保存する家電は（　）です。",
+      "answer": "れいぞうこ",
+      "choices": [
+        "れいぞうこ",
+        "かがみ",
+        "おかいもの",
+        "そうじき"
+      ],
+      "hint": "文の前後の意味を考えましょう。最初の音は「れ」です。",
+      "explanation": "空欄に「れいぞうこ」を入れると、意味が通ります。例：「冷蔵庫に牛乳をしまいます。」。「れいぞうこ」は食材を冷やして保存する家電を表します。",
+      "difficultyLevel": 6,
+      "expansionVersion": "veta11",
+      "practiceVariant": 28
+    },
+    {
+      "question": "文の空いているところに入る言葉を選びましょう。",
+      "prompt": "体の温度を調べる道具は（　）です。",
+      "answer": "たいおんけい",
+      "choices": [
+        "たいおんけい",
+        "しんぶん",
+        "おはよう",
+        "しょくじ"
+      ],
+      "hint": "文の前後の意味を考えましょう。最初の音は「た」です。",
+      "explanation": "空欄に「たいおんけい」を入れると、意味が通ります。例：「体温計で熱を測ります。」。「たいおんけい」は体の温度を調べる道具を表します。",
+      "difficultyLevel": 6,
+      "expansionVersion": "veta11",
+      "practiceVariant": 29
+    }
+  ]
+}
